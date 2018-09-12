@@ -38,7 +38,7 @@ const app: Routes = [
         BrowserModule,
         RouterModule.forRoot(app, {
             preloadingStrategy: PreloadAllModules,
-            useHash: true
+            useHash: false
         }),
         HttpClientModule,
         FormsModule,

@@ -16,4 +16,7 @@ export class LoginService {
             password: password
         });
     }
+    public registrar(data: any): Observable<any>{
+        return this.http.post(this.globals.PATH + 'auth/registrar', data);
+    }
 }
