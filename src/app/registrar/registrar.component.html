@@ -56,13 +56,8 @@
                                                 <i class="nc-icon nc-single-02"></i>
                                             </span>
                                         </div>
-                                        <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        autocomplete="off"
-                                        name="nombre"
-                                        [(ngModel)]="data.nombre"
-                                        placeholder="Nombres...">
+                                        <input type="text" class="form-control" autocomplete="off" name="nombre"
+                                            [(ngModel)]="data.nombre" placeholder="Nombres..." required>
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -70,13 +65,8 @@
                                                 <i class="nc-icon nc-circle-10"></i>
                                             </span>
                                         </div>
-                                        <input 
-                                        type="text" 
-                                        placeholder="Apellidos..." 
-                                        name="apellido"
-                                        autocomplete="off"
-                                        [(ngModel)]="data.apellido"
-                                        class="form-control">
+                                        <input type="text" placeholder="Apellidos..." name="apellido" autocomplete="off"
+                                            [(ngModel)]="data.apellido" class="form-control" required>
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -84,13 +74,8 @@
                                                 <i class="nc-icon nc-key-25"></i>
                                             </span>
                                         </div>
-                                        <input 
-                                        type="password" 
-                                        placeholder="Contraseña" 
-                                        name="password"
-                                        autocomplete="off"
-                                        [(ngModel)]="data.password"
-                                        class="form-control">
+                                        <input type="password" placeholder="Contraseña" name="password" autocomplete="off"
+                                            [(ngModel)]="data.password" class="form-control" required>
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -98,21 +83,13 @@
                                                 <i class="nc-icon nc-email-85"></i>
                                             </span>
                                         </div>
-                                        <input 
-                                        type="email" 
-                                        class="form-control" 
-                                        autocomplete="off"
-                                        name="correo"
-                                        [(ngModel)]="data.correo"
-                                        placeholder="Correo electrónico...">
+                                        <input type="email" class="form-control" autocomplete="off" name="correo"
+                                            [(ngModel)]="data.correo" placeholder="Correo electrónico..." required>
                                     </div>
                                     <div class="form-check text-left">
                                         <label class="form-check-label">
-                                            <input 
-                                            class="form-check-input" 
-                                            name="aceptar"
-                                            [(ngModel)]="data.aceptar"
-                                            type="checkbox">
+                                            <input class="form-check-input" name="aceptar" [(ngModel)]="data.aceptar"
+                                                type="checkbox">
                                             <span class="form-check-sign"></span>
                                             Estoy deacuerdo en
                                             <a href="#something">los términos y condiciones</a>.
@@ -141,5 +118,29 @@
                 </div>
             </div>
         </footer>
+    </div>
+</div>
+<div class="modal fade" id="modal-accept" tabindex="-1" role="dialog" aria-labelledby="registro" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registro completado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <b>¡Perfecto!</b><br>
+                <p>
+                    Tu cuenta ha sido creada exitosamente. <br><br>
+                    ¡Ahora inicia sesión y disfruta de las herramientas de Stryfe!
+                    <!--Ahora inicia sesión en tu nueva cuenta y no olvides verificar tu correo electrónico-->
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-neutral btn-round btn-block" data-dismiss="modal"
+                (click)="goToLogin()">Aceptar</button>
+            </div>
+        </div>
     </div>
 </div>

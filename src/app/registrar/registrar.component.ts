@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
     selector: 'app-registrar',
@@ -8,7 +9,8 @@ declare var $: any;
 })
 export class RegistrarComponent implements OnInit {
     constructor(
-        private login: LoginService
+        private login: LoginService,
+        private router: Router
     ) { }
     ngOnInit() {
         $("title").text("Registrarme en Stryfe");
@@ -30,7 +32,16 @@ export class RegistrarComponent implements OnInit {
         ){
             if(this.data.aceptar){
                 this.login.registrar(this.data).subscribe(r => {
-                    console.log(r);
+                    if(r.error){
+                        this.errors = [];
+                        this.errors.push('Ocurrió un error al guardar. Verifica los datos.');
+                    }else {
+                        $("#modal-accept").modal({
+                            show: true,
+                            keyboard: false
+                        });
+                    }
+                    //this.router.navigate(['login']);
                 }, err => {
                     this.errors.push("Error al registrar el usuario");
                     console.error(err);
@@ -40,5 +51,13 @@ export class RegistrarComponent implements OnInit {
             this.errors.pop();
             this.errors.push("Campos vacíos");
         }
+    }
+    goToLogin(): void{
+        $("#modal-accept").modal({
+            show: false
+        });
+        setTimeout(() => {
+            this.router.navigate(['login']);
+        }, 800);
     }
 }

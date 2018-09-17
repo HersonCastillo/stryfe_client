@@ -55,6 +55,12 @@
                                     <b *ngIf="!isLoad">INICIAR SESIÓN</b>
                                     <b *ngIf="isLoad">INICIANDO SESIÓN...</b>
                                 </button>
+                                <button 
+                                    class="btn btn-warning btn-round btn-block mb-3" 
+                                    type="button"
+                                    [routerLink]="['/registrar']">
+                                    <b *ngIf="!isLoad">CREAR CUENTA</b>
+                                </button>
                             </div>
                         </div>
                     </form>

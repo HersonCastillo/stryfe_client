@@ -30,14 +30,18 @@ export class LoginComponent implements OnInit {
                     this.errors.push(r.error);
                 } else if(r.user && r.token){
                     this.errors = [];
-                    console.log(r);
                     localStorage.setItem('token', r.token);
-                    switch(r.id_tipo_usuario){
+                    localStorage.setItem('u_data', btoa(r.user));
+                    switch(r.user.id_tipo_usuario){
                         case 1: {
                             this.router.navigate(['admin']);
                             break;
                         }
                         case 2: {
+                            //this.router.navigate(['me', 'home']); Falta vista de empleado
+                            break;
+                        }
+                        case 3: {
                             this.router.navigate(['me', 'home']);
                             break;
                         }
