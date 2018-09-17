@@ -10,14 +10,20 @@ import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
 import { CpanelAdminComponent } from './admin/cpanel/cpanel.component';
 import { CategoriasComponent } from './admin/views/categorias/categorias.component';
+import { CpanelUserComponent } from './users/cpanel/cpanel.component';
+import { HomeUserComponent } from './users/views/home/home.component'
 
 const app: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'registrar', component: RegistrarComponent },
     { path: 'home', component: HomeComponent },
-    { path: 'admin', component: CpanelAdminComponent, children: [
+    { path: 'admin', component: CpanelAdminComponent ,children: [
         { path: 'categorias', component: CategoriasComponent },
         { path: '', redirectTo: 'categorias', pathMatch: 'full' }
+    ], canActivate: [] },
+    { path: 'me', component: CpanelUserComponent, children: [
+        { path: 'home', component: HomeUserComponent }, 
+        { path: '', redirectTo: 'home', pathMatch: 'full' }
     ], canActivate: [] },
     { path: 'error', component: ErrorComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -32,7 +38,9 @@ const app: Routes = [
         HomeComponent,
         ErrorComponent,
         CpanelAdminComponent,
-        CategoriasComponent
+        CategoriasComponent,
+        CpanelUserComponent,
+        HomeUserComponent
     ],
     imports: [
         BrowserModule,
