@@ -12,19 +12,20 @@ import { CpanelAdminComponent } from './admin/cpanel/cpanel.component';
 import { CategoriasComponent } from './admin/views/categorias/categorias.component';
 import { CpanelUserComponent } from './users/cpanel/cpanel.component';
 import { HomeUserComponent } from './users/views/home/home.component'
+import { AuthGuardLogin, AuthGuardAdmin, AuthGuardClient, AuthGuardEmployee } from './services/auth.guard';
 
 const app: Routes = [
-    { path: 'login', component: LoginComponent },
-    { path: 'registrar', component: RegistrarComponent },
+    { path: 'login', component: LoginComponent, canActivate: [AuthGuardLogin] },
+    { path: 'registrar', component: RegistrarComponent, canActivate: [AuthGuardLogin] },
     { path: 'home', component: HomeComponent },
-    { path: 'admin', component: CpanelAdminComponent ,children: [
+    { path: 'admin', component: CpanelAdminComponent, children: [
         { path: 'categorias', component: CategoriasComponent },
         { path: '', redirectTo: 'categorias', pathMatch: 'full' }
-    ], canActivate: [] },
+    ], canActivate: [AuthGuardAdmin] },
     { path: 'me', component: CpanelUserComponent, children: [
         { path: 'home', component: HomeUserComponent }, 
         { path: '', redirectTo: 'home', pathMatch: 'full' }
-    ], canActivate: [] },
+    ], canActivate: [AuthGuardClient] },
     { path: 'error', component: ErrorComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'error', pathMatch: 'full' }
