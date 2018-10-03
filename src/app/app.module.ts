@@ -8,11 +8,19 @@ import { LoginComponent } from './login/login.component';
 import { RegistrarComponent } from './registrar/registrar.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
-import { CpanelAdminComponent } from './admin/cpanel/cpanel.component';
-import { CategoriasComponent } from './admin/views/categorias/categorias.component';
-import { CpanelUserComponent } from './users/cpanel/cpanel.component';
-import { HomeUserComponent } from './users/views/home/home.component'
-import { AuthGuardLogin, AuthGuardAdmin, AuthGuardClient, AuthGuardEmployee } from './services/auth.guard';
+import { CpanelAdminComponent } from './client-access/admin/cpanel/cpanel.component';
+import { CategoriasComponent } from './client-access/admin/views/categorias/categorias.component';
+import { CpanelUserComponent } from './client-access/users/cpanel/cpanel.component';
+import { HomeUserComponent } from './client-access/users/views/home/home.component'
+import { 
+    AuthGuardLogin,
+    AuthGuardAdmin, 
+    AuthGuardClient, 
+    AuthGuardEmployee 
+} from './services/auth.guard';
+import { AdminUsersComponent } from './client-access/admin/views/admin-users/admin-users.component';
+import { ProductosComponent } from './client-access/admin/views/productos/productos.component';
+import { DescuentosComponent } from './client-access/admin/views/descuentos/descuentos.component';
 
 const app: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [AuthGuardLogin] },
@@ -41,7 +49,10 @@ const app: Routes = [
         CpanelAdminComponent,
         CategoriasComponent,
         CpanelUserComponent,
-        HomeUserComponent
+        HomeUserComponent,
+        AdminUsersComponent,
+        ProductosComponent,
+        DescuentosComponent
     ],
     imports: [
         BrowserModule,
