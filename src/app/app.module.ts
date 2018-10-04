@@ -80,8 +80,8 @@ const app: Routes = [
         HttpClientModule,
         JwtModule.forRoot({
             config: {
-                tokenGetter: () => {
-                    let token = localStorage.getItem('token');
+                tokenGetter: (): string => {
+                    let token: string = localStorage.getItem('token');
                     if(token != null && token.length > 150) return token;
                     return null;
                 },
