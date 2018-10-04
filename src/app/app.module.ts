@@ -21,13 +21,27 @@ import {
 import { AdminUsersComponent } from './client-access/admin/views/admin-users/admin-users.component';
 import { ProductosComponent } from './client-access/admin/views/productos/productos.component';
 import { DescuentosComponent } from './client-access/admin/views/descuentos/descuentos.component';
+import { SubcategoriasComponent } from './client-access/admin/views/subcategorias/subcategorias.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'ng6-toastr';
 
 const app: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [AuthGuardLogin] },
     { path: 'registrar', component: RegistrarComponent, canActivate: [AuthGuardLogin] },
     { path: 'home', component: HomeComponent },
     { path: 'admin', component: CpanelAdminComponent, children: [
-        { path: 'categorias', component: CategoriasComponent },
+        { path: 'categorias', children: [
+            { path: 'categorias', component: CategoriasComponent },
+            { path: 'subcategorias', component: SubcategoriasComponent },
+            { path: '', redirectTo: 'categorias', pathMatch: 'full' }
+        ] },
+        { path: 'productos', children: [
+            { path: 'productos', component: ProductosComponent },
+            { path: 'descuentos', component: DescuentosComponent },
+            { path: '', redirectTo: 'productos', pathMatch: 'full' }
+        ] },
+        { path: 'administrators', component: AdminUsersComponent },
         { path: '', redirectTo: 'categorias', pathMatch: 'full' }
     ], canActivate: [AuthGuardAdmin] },
     { path: 'me', component: CpanelUserComponent, children: [
@@ -52,7 +66,8 @@ const app: Routes = [
         HomeUserComponent,
         AdminUsersComponent,
         ProductosComponent,
-        DescuentosComponent
+        DescuentosComponent,
+        SubcategoriasComponent
     ],
     imports: [
         BrowserModule,
@@ -60,9 +75,25 @@ const app: Routes = [
             preloadingStrategy: PreloadAllModules,
             useHash: false
         }),
-        HttpClientModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: () => {
+                    let token = localStorage.getItem('token');
+                    if(token != null && token.length > 150) return token;
+                    return null;
+                },
+                whitelistedDomains: [
+                    'localhost:3500',
+                    'localhost:4200'
+                ],
+                skipWhenExpired: true
+            }
+        }),
+        BrowserAnimationsModule,
+        //ToastModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]
