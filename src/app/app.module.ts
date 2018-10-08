@@ -24,7 +24,12 @@ import { DescuentosComponent } from './client-access/admin/views/descuentos/desc
 import { SubcategoriasComponent } from './client-access/admin/views/subcategorias/subcategorias.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastModule } from 'ng6-toastr';
+
+export function Token(): string {
+    let token: string = localStorage.getItem('token');
+    if(token != null && token.length > 150) return token;
+    return null;
+}
 
 const app: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [AuthGuardLogin] },
@@ -80,11 +85,7 @@ const app: Routes = [
         HttpClientModule,
         JwtModule.forRoot({
             config: {
-                tokenGetter: (): string => {
-                    let token: string = localStorage.getItem('token');
-                    if(token != null && token.length > 150) return token;
-                    return null;
-                },
+                tokenGetter: Token,
                 whitelistedDomains: [
                     'localhost:3500',
                     'localhost:4200'
