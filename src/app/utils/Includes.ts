@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
+import swal from 'sweetalert';
+import { isArray } from 'util';
+
 @Injectable({
     providedIn: 'root'
 })
+
 export class Includes {
     static determinateAccess(type: number): string[]{
         switch(type){
@@ -10,5 +14,49 @@ export class Includes {
             case 3: return ['/me'];
             default: return ['/login'];
         }
+    }
+    static alert(title: string, message: string, type?: string): void{
+        swal({
+            title: title,
+            text: message,
+            icon: type || "info"
+        });
+    }
+    static question(title: string, message: string, onSuccess: Function, onCancel?: Function,  isDanger?: boolean, onError?: Function): void{
+        swal({
+            title: title,
+            text: message,
+            icon: "warning",
+            dangerMode: isDanger || false,
+            buttons: [true, true]
+        }).then(answer => {
+            if(answer) onSuccess();
+            else if(onCancel) onCancel();
+        }).catch(answer => {
+            if(onError) onError(answer);
+            return;
+        });
+    }
+    static saveErrorLog(error: any): void{
+        let logger = sessionStorage.getItem('logger');
+        if(logger != undefined){
+            try{
+                let parser = JSON.parse(logger);
+                if(isArray(parser)){
+                    if(parser.length > 10) parser.pop();
+                    parser.push(error);
+                    sessionStorage.setItem("logger", JSON.stringify(parser));
+                } else Includes.cleanErrorLog();
+            }catch(ex){
+                Includes.cleanErrorLog();
+            }
+        } else sessionStorage.setItem('logger', JSON.stringify([].push(error)));
+    }
+    static cleanErrorLog(): void{
+        let logger = sessionStorage.getItem('logger');
+        if(logger != undefined) sessionStorage.removeItem('logger');
+    }
+    static validateText(val: string): boolean{
+        return val && val.trim().length > 0;
     }
 }

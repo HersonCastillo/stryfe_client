@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Includes } from '../../../utils/Includes';
 declare var $: any;
 declare var paperDashboard: any;
 @Component({
@@ -12,14 +13,11 @@ export class CpanelAdminComponent implements OnInit {
         private router: Router
     ) { }
     closeSessionModal(): void{
-        $('#closesessionModal').modal('show');
-    }
-    closeSession(): void{
-        $('#closesessionModal').modal('hide');
-        setTimeout(() => {
+        Includes.question("¡Espera un momento!", "¿Estás seguro de que deseas cerrar sesión?", () => {
             localStorage.removeItem('token');
+            localStorage.removeItem('u_data');
             this.router.navigate(['/login']);
-        }, 500);
+        });
     }
     ngOnInit() {
         $(document).ready(function () {
