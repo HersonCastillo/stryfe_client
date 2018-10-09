@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Globals } from './global.service';
-import { Categoria } from '../interfaces/categoria';
+import { Categoria, Respuesta, CRUD } from '../interfaces/i';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { Respuesta } from '../interfaces/respuesta';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CategoriaService {
+export class CategoriaService implements CRUD {
     constructor(
         private http: HttpClient,
         private globals: Globals
