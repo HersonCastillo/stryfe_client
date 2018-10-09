@@ -30,7 +30,7 @@ export class CategoriasComponent implements OnInit {
         this.loadCategories(false);
     }
     loadCategories(reset: boolean){
-        this.categoriasProvider.listarCategorias(reset).subscribe(r => {
+        this.categoriasProvider.listar(reset).subscribe(r => {
             this.categorias = r;
         }, err => {
             this.loggerLocal.errors.push("No se pueden obtener las categorías del servidor.");
@@ -52,7 +52,7 @@ export class CategoriasComponent implements OnInit {
 
             let alert: string = "Guardando categoría...";
             this.loggerLocal.warnings.push(alert);
-            this.categoriasProvider.nuevaCategoria(categoria).subscribe(r => {
+            this.categoriasProvider.crear(categoria).subscribe(r => {
                 this.removeAlert(alert, 'warnings');
                 if(r.success){
                     this.loadCategories(true);
@@ -86,7 +86,7 @@ export class CategoriasComponent implements OnInit {
 
             let alert: string = "Guardando categoría...";
             this.loggerLocal.warnings.push(alert);
-            this.categoriasProvider.modificarCategoria(this.editCategoria).subscribe(r => {
+            this.categoriasProvider.modificar(this.editCategoria).subscribe(r => {
                 this.removeAlert(alert, 'warnings');
                 if(r.success){
                     this.loadCategories(true);
@@ -106,7 +106,7 @@ export class CategoriasComponent implements OnInit {
         Includes.question("¡Espera un momento!", "¿Estás seguro de eliminar la categoría?", () => {
             let alert: string = "Eliminando categoría...";
             this.loggerLocal.warnings.push(alert);
-            this.categoriasProvider.eliminarCategoria(categoria).subscribe(r => {
+            this.categoriasProvider.eliminar(categoria).subscribe(r => {
                 this.removeAlert(alert, 'warnings');
                 if(r.success){
                     this.loadCategories(true);
