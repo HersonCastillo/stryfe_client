@@ -15,25 +15,25 @@ export class Includes {
             default: return ['/login'];
         }
     }
-    static alert(title: string, message: string, type?: string): void{
+    static alert(title: string, message: string, type?: any): void{
         swal({
             title: title,
             text: message,
             icon: type || "info"
         });
     }
-    static question(title: string, message: string, onSuccess: Function, onCancel?: Function,  isDanger?: boolean, onError?: Function): void{
+    static question(title: string, message: string, onSuccess: Function, onCancel?: Function, isDanger?: boolean, onError?: Function): void{
         swal({
             title: title,
             text: message,
-            icon: "warning",
             dangerMode: isDanger || false,
-            buttons: [true, true]
+            icon: "warning",
+            buttons: ["Cancelar", "OK"]
         }).then(answer => {
             if(answer) onSuccess();
             else if(onCancel) onCancel();
-        }).catch(answer => {
-            if(onError) onError(answer);
+        }).catch(() => {
+            if(onError) onError();
             return;
         });
     }

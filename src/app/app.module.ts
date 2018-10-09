@@ -93,8 +93,7 @@ const app: Routes = [
                 skipWhenExpired: true
             }
         }),
-        BrowserAnimationsModule,
-        //ToastModule.forRoot()
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Globals } from './global.service';
 import { Categoria } from '../interfaces/categoria';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Respuesta } from '../interfaces/respuesta';
 
 @Injectable({
@@ -13,8 +14,10 @@ export class CategoriaService {
         private http: HttpClient,
         private globals: Globals
     ) { }
-    public listarCategorias(): Observable<Categoria[]>{
-        return this.http.get<Categoria[]>(`${this.globals.PATH}api/v1/categoria`);
+    private categorias: Categoria[];
+    public listarCategorias(reset: boolean): Observable<Categoria[]>{
+        if(!reset) if(this.categorias != null) return of(this.categorias);
+        return this.http.get<Categoria[]>(`${this.globals.PATH}api/v1/categoria`).pipe(map(d => d), tap(nList => this.categorias = nList));
     }
     public obtenerCategoria(categoria: Categoria): Observable<Categoria[]>{
         return this.http.get<Categoria[]>(`${this.globals.PATH}api/v1/categoria/${categoria.id}`);
