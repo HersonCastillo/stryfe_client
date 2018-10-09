@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Globals } from './global.service';
-import { Categoria, Respuesta, CRUD } from '../interfaces/i';
+import { Categoria, Respuesta, CRUD } from '../interfaces/ifs';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
