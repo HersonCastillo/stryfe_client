@@ -20,6 +20,18 @@ export class CpanelAdminComponent implements OnInit {
         });
     }
     ngOnInit() {
+        setTimeout(() => {
+            let renovalNotification = sessionStorage.getItem('renoval');
+            if(renovalNotification){
+                try{
+                    let parsed = JSON.parse(renovalNotification);
+                    Includes.alert(parsed.title, parsed.text, parsed.icon);
+                    sessionStorage.removeItem('renoval');
+                }catch(ex){
+                    Includes.saveErrorLog(ex);
+                }
+            }
+        }, 500);
         $(document).ready(function () {
             let $sidebar = $('.sidebar');
             let $sidebar_img_container = $sidebar.find('.sidebar-background');

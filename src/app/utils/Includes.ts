@@ -15,12 +15,14 @@ export class Includes {
             default: return ['/login'];
         }
     }
-    static alert(title: string, message: string, type?: any): void{
+    static alert(title: string, message: string, type?: any, onSuccess?: Function): void{
         swal({
             title: title,
             text: message,
             icon: type || "info"
-        });
+        }).then(() => {
+            if(onSuccess) onSuccess();
+        })
     }
     static question(title: string, message: string, onSuccess: Function, onCancel?: Function, isDanger?: boolean, onError?: Function): void{
         swal({
