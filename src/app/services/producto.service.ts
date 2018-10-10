@@ -30,4 +30,9 @@ export class ProductoService {
     obtener(value: Producto): Observable<Producto> {
         return this.http.get<Producto>(`${this.globals.PATH}api/v1/producto/${value.id}`);
     }
+    guardarImagen(file: File): Observable<Respuesta>{
+        let image = new FormData();
+        image.append("image", file, file.name);
+        return this.http.post(`${this.globals.PATH}api/v1/producto/image`, image);
+    }
 }

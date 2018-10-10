@@ -20,6 +20,7 @@ export class CpanelAdminComponent implements OnInit {
         });
     }
     ngOnInit() {
+        $("title").text("Administración");
         setTimeout(() => {
             let renovalNotification = sessionStorage.getItem('renoval');
             if(renovalNotification){
