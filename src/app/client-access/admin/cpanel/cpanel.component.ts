@@ -25,8 +25,10 @@ export class CpanelAdminComponent implements OnInit {
             if(renovalNotification){
                 try{
                     let parsed = JSON.parse(renovalNotification);
-                    Includes.alert(parsed.title, parsed.text, parsed.icon);
-                    sessionStorage.removeItem('renoval');
+                    if(parsed.userId == Includes.getEmail()){
+                        Includes.alert(parsed.title, parsed.text, parsed.icon);
+                        sessionStorage.removeItem('renoval');
+                    }
                 }catch(ex){
                     Includes.saveErrorLog(ex);
                 }

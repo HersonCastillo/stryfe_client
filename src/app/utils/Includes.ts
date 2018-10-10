@@ -61,4 +61,17 @@ export class Includes {
     static validateText(val: string): boolean{
         return val && val.trim().length > 0;
     }
+    static getEmail(): string{
+        let user = localStorage.getItem('u_data');
+        if (user) {
+            try {
+                let rawDecode = atob(user);
+                let parsed = JSON.parse(rawDecode);
+                return parsed.correo;
+            } catch (ex) {
+                Includes.saveErrorLog(ex);
+                return null;
+            }
+        } return null;
+    }
 }

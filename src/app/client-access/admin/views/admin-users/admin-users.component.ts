@@ -89,7 +89,7 @@ export class AdminUsersComponent implements OnInit {
             this.loggerLocal.warnings.push(alert);
             this.provider.crear(this.value).subscribe(r => {
                 this.removeAlert(alert, 'warnings');
-                $(`#editar${this.loggerNameUpp}`).modal('hide');
+                $(`#crear${this.loggerNameUpp}`).modal('hide');
                 if (r.success) {
                     this.loggerLocal.success.push(`El ${this.loggerNameLow} se guardó con éxito.`);
                     this.load(true);
@@ -144,13 +144,14 @@ export class AdminUsersComponent implements OnInit {
                     this.load(true);
                     setTimeout(() => {
                         if (this.itsMe(this.editValue)) {
-                            localStorage.removeItem('token');
-                            localStorage.removeItem('u_data');
                             sessionStorage.setItem('renoval', JSON.stringify({
                                 icon: 'success',
                                 text: 'Datos actualizados',
-                                title: '¡Perfecto!'
+                                title: '¡Perfecto!',
+                                userId: Includes.getEmail()
                             }));
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('u_data');
                             Includes.alert("Actualización detectada",
                                 "Se detectó un cambio de datos de la sesión actual, se procederá a cerrar la sesión debido a nuestras políticas de seguridad. Vuelve a iniciar sesión.",
                                 "info", () => setTimeout(() => this.router.navigate(['/login']), 500));
