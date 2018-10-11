@@ -31,14 +31,14 @@ export class LoginComponent implements OnInit {
                 } else if(r.user && r.token){
                     this.errors = [];
                     localStorage.setItem('token', r.token);
-                    localStorage.setItem('u_data', btoa(r.user));
+                    localStorage.setItem('u_data', btoa(JSON.stringify(r.user)));
                     switch(r.user.id_tipo_usuario){
                         case 1: {
                             this.router.navigate(['admin']);
                             break;
                         }
                         case 2: {
-                            //this.router.navigate(['me', 'home']); Falta vista de empleado
+                            //this.router.navigate(['employee', 'home']); Falta vista de empleado
                             break;
                         }
                         case 3: {
@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
             }, err => {
                 this.isLoad = false;
                 console.error(err);
+                this.errors.push("Se encontró un error al conectarse con el servidor.");
             });
         }
     }

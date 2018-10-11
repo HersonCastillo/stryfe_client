@@ -58,9 +58,14 @@
                                 <button 
                                     class="btn btn-warning btn-round btn-block mb-3" 
                                     type="button"
+                                    [disabled]="isLoad"
                                     [routerLink]="['/registrar']">
-                                    <b *ngIf="!isLoad">CREAR CUENTA</b>
+                                    <b>CREAR CUENTA</b>
                                 </button>
+                                <br>
+                                <span>
+                                    ¿Olvidaste tu contraseña? recupera tu cuenta <a href="#some1">aquí</a>.
+                                </span>
                             </div>
                         </div>
                     </form>

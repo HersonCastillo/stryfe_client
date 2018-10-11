@@ -1,0 +1,134 @@
+<div class="sidebar" data-color="brown" data-active-color="danger">
+    <div class="logo">
+        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+            <div class="logo-image-small">
+                <img src="../assets/img/logo-small.png">
+            </div>
+        </a>
+        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+            Stryfe
+            <!-- <div class="logo-image-big">
+          <img src="../assets/img/logo-big.png">
+        </div> -->
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <div class="user">
+            <div class="photo">
+                <img src="assets/img/user.png" />
+            </div>
+            <div class="info">
+                <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                    <span>
+                        Administrador
+                        <b class="caret"></b>
+                    </span>
+                </a>
+                <div class="clearfix"></div>
+                <div class="collapse" id="collapseExample">
+                    <ul class="nav">
+                        <li>
+                            <a (click)="closeSessionModal()">
+                                <span class="sidebar-mini-icon">CS</span>
+                                <span class="sidebar-normal">Cerrar sesión</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ul class="nav" style="overflow: hidden;">
+            <li>
+                <a data-toggle="collapse" href="#categoria">
+                    <i class="nc-icon nc-box"></i>
+                    <p>
+                        CATEGORÍAS
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse " id="categoria">
+                    <ul class="nav">
+                        <li>
+                            <a [routerLink]="['categorias', 'categorias']">
+                                <span class="sidebar-mini-icon">C</span>
+                                <span class="sidebar-normal"> Categorías agregadas </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a [routerLink]="['categorias', 'subcategorias']">
+                                <span class="sidebar-mini-icon">S</span>
+                                <span class="sidebar-normal"> Subcategorías </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a data-toggle="collapse" href="#productos">
+                    <i class="nc-icon nc-box"></i>
+                    <p>
+                        PRODUCTOS
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse " id="productos">
+                    <ul class="nav">
+                        <li>
+                            <a [routerLink]="['productos', 'productos']">
+                                <span class="sidebar-mini-icon">P</span>
+                                <span class="sidebar-normal"> Productos agregados </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a [routerLink]="['productos', 'descuentos']">
+                                <span class="sidebar-mini-icon">D</span>
+                                <span class="sidebar-normal"> Descuentos </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a [routerLink]="['administrators']">
+                    <i class="nc-icon nc-circle-10"></i>
+                    <p>ADMINISTRADORES</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="main-panel">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <div class="navbar-minimize">
+                    <button id="minimizeSidebar" class="btn btn-icon btn-round">
+                        <i class="nc-icon nc-minimal-right text-center visible-on-sidebar-mini"></i>
+                        <i class="nc-icon nc-minimal-left text-center visible-on-sidebar-regular"></i>
+                    </button>
+                </div>
+                <div class="navbar-toggle">
+                    <button type="button" class="navbar-toggler">
+                        <span class="navbar-toggler-bar bar1"></span>
+                        <span class="navbar-toggler-bar bar2"></span>
+                        <span class="navbar-toggler-bar bar3"></span>
+                    </button>
+                </div>
+                <a class="navbar-brand" href="#pablo">Administración de Stryfe</a>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+    <!-- <div class="panel-header">
+
+<canvas id="bigDashboardChart"></canvas>
+
+
+</div> -->
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<!--modals-->

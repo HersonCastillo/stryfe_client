@@ -42,6 +42,7 @@
                         <div class="card card-signup text-center">
                             <div class="card-header ">
                                 <h4 class="card-title">Registrar</h4>
+                                <a [routerLink]="['/login']">Iniciar sesión</a>
                             </div>
                             <div class="alert alert-danger" *ngIf="errors.length">
                                 <li *ngFor="let error of errors">
@@ -91,7 +92,7 @@
                                             <input class="form-check-input" name="aceptar" [(ngModel)]="data.aceptar"
                                                 type="checkbox">
                                             <span class="form-check-sign"></span>
-                                            Estoy deacuerdo en
+                                            Estoy deacuerdo con
                                             <a href="#something">los términos y condiciones</a>.
                                         </label>
                                     </div>
