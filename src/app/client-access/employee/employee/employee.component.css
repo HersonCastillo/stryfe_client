@@ -1,0 +1,24 @@
+.mark-line{
+    border-right: 1px solid #ddd;
+    height: 100%;
+}
+.mark-line-bottom{
+    border-bottom: 1px solid #ddd;
+    height: 100%;
+}
+.down-all{
+    height: 100%;
+}
+.box-input{
+    position: fixed;
+    bottom: 10px;
+    width: 60%;
+}
+.absolute{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+}

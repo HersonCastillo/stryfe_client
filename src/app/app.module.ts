@@ -24,6 +24,7 @@ import { DescuentosComponent } from './client-access/admin/views/descuentos/desc
 import { SubcategoriasComponent } from './client-access/admin/views/subcategorias/subcategorias.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EmployeeComponent } from './client-access/employee/employee/employee.component';
 
 export function Token(): string {
     let token: string = localStorage.getItem('token');
@@ -53,6 +54,7 @@ const app: Routes = [
         { path: 'home', component: HomeUserComponent }, 
         { path: '', redirectTo: 'home', pathMatch: 'full' }
     ], canActivate: [AuthGuardClient] },
+    { path: 'employee', component: EmployeeComponent },
     { path: 'error', component: ErrorComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'error', pathMatch: 'full' }
@@ -72,7 +74,8 @@ const app: Routes = [
         AdminUsersComponent,
         ProductosComponent,
         DescuentosComponent,
-        SubcategoriasComponent
+        SubcategoriasComponent,
+        EmployeeComponent
     ],
     imports: [
         BrowserModule,

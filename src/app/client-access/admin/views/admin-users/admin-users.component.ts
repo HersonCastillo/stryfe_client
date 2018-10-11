@@ -104,7 +104,7 @@ export class AdminUsersComponent implements OnInit {
             });
         } else this.loggerLocal.warnings.push("Los datos de guardado no son correctos.");
     }
-    crearModal(admin: Usuario): void {
+    crearModal(): void {
         $(`#crear${this.loggerNameUpp}`).modal('show');
     }
     eliminar(admin: Usuario): void {
