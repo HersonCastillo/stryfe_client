@@ -12,8 +12,7 @@ declare var $: any;
 })
 export class EmployeeUsersComponent implements OnInit {
     constructor(
-        private provider: EmpleadoService,
-        private router: Router
+        private provider: EmpleadoService
     ) { }
     public loggerLocal = {
         errors: [],

@@ -58,47 +58,51 @@
             <br>
             <button type="button" class="btn btn-primary" (click)="crearModal()">Agregar {{loggerNameLow}}</button>
         </div>
-        <!--<div class="col">
+        <div class="col">
             <div class="form-group">
                 <label for="{{loggerNameLow}}Search">Buscar {{loggerNameLow}}</label>
-                <input (keyup)="search($event)" [(ngModel)]="search" type="text" class="form-control" id="Search"
+                <input (keyup)="searchEvent($event)" [(ngModel)]="search" type="text" class="form-control" id="Search"
                     placeholder="Escribe algo aquí...">
             </div>
-        </div>-->
+        </div>
     </div>
     <div class="container">
         <br>
         <table class="table">
             <thead>
                 <tr>
-                    <th class="text-center">#</th>
+                    <th class="text-center">Nombre</th>
                     <th>Descripción</th>
                     <th>Precio</th>
-                    <th>Stock existente</th>
-                    <th>Stock mínimo</th>
+                    <th>Existentes</th>
+                    <th>Mínimo</th>
                     <th>Cantidad</th>
+                    <th>Imagen</th>
                     <th class="text-right">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let x of values">
-                    <td class="text-center">{{x.id}}</td>
+                    <td class="text-center">{{x.nombre}}</td>
                     <td>{{x.descripcion}}</td>
                     <td>{{x.precio}}</td>
                     <td>{{x.stock_existente}}</td>
                     <td>{{x.stock_minimo}}</td>
                     <td>{{x.cantidad}}</td>
+                    <td>
+                        <img src="{{getImage(x.img)}}" alt="Recurso visual del producto" width="128" height="128">
+                    </td>
                     <td class="td-actions text-right">
                         <button (click)="editarModal(x)" type="button" style="margin-right: 5px;" rel="tooltip" class="btn btn-success btn-sm btn-round btn-icon">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button [disabled]="itsMe(x)" (click)="eliminar(x)" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon">
+                        <button (click)="eliminar(x)" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon">
                             <i class="fa fa-times"></i>
                         </button>
                     </td>
                 </tr>
                 <tr *ngIf="values.length === 0">
-                    <td class="text-center" colspan="7">
+                    <td class="text-center" colspan="8">
                         No se encontraron resultados.
                     </td>
                 </tr>
@@ -129,31 +133,44 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <textarea id="descripcion_crear" type="text" [(ngModel)]="value.descripcion" class="form-control"
-                                            placeholder="Descripción del producto" name="descripcion_crear"></textarea>
+                                            <label for="nombre_crear">Nombre del producto</label>
+                                            <input type="text" id="nombre_crear" type="text" [(ngModel)]="value.nombre"
+                                                class="form-control" placeholder="Nombre del producto" name="nombre_crear">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="descripcion_crear">Descripción del producto</label>
+                                            <textarea id="descripcion_crear" type="text" [(ngModel)]="value.descripcion"
+                                                class="form-control" placeholder="Descripción del producto" name="descripcion_crear"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
+                                            <label for="precio_crear">Precio</label>
                                             <input id="precio_crear" type="number" [(ngModel)]="value.precio" class="form-control"
                                                 placeholder="Precio unitario ($)" name="precio_crear">
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
+                                            <label for="cantidad_crear">Cantidad</label>
                                             <input id="cantidad_crear" type="number" [(ngModel)]="value.cantidad" class="form-control"
                                                 placeholder="Cantidad inicial" name="cantidad_crear">
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <input id="minimo_crear" type="number" [(ngModel)]="value.stock_minimo" class="form-control"
-                                                placeholder="Cantidad inicial" name="minimo_crear">
+                                            <label for="minimo_crear">Stock mínimo</label>
+                                            <input id="minimo_crear" type="number" [(ngModel)]="value.stock_minimo"
+                                                class="form-control" placeholder="Stock mínimo" name="minimo_crear">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <select class="form-control" name="estadoProducto_crear" id="estadoProducto_crear" [(ngModel)]="value.id_estado_prod">
+                                            <label for="estadoProducto_crear">Estado del producto</label>
+                                            <select class="form-control" name="estadoProducto_crear" id="estadoProducto_crear"
+                                                [(ngModel)]="value.id_estado_prod">
                                                 <option value="1" selected>Activo</option>
                                                 <option value="2">Descontinuado</option>
                                             </select>
@@ -161,28 +178,39 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <select class="form-control" name="subcategoria_crear" id="subcategoria_crear" [(ngModel)]="value.id_subcategoria_prod">
-                                                
+                                            <label for="subcategoria_crear">Subcategoría</label>
+                                            <select class="form-control" name="subcategoria_crear" id="subcategoria_crear"
+                                                [(ngModel)]="value.id_subcategoria_prod">
+                                                <option value="0" disabled selected>Sub Categoría</option>
+                                                <option *ngFor="let s of subcategoria" value="{{s.id}}">{{s.descripcion}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <select class="form-control" name="talla_crear" id="talla_crear" [(ngModel)]="value.id_talla">
-                                                
+                                            <label for="talla_crear">Talla</label>
+                                            <select class="form-control" name="talla_crear" id="talla_crear"
+                                                [(ngModel)]="value.id_talla">
+                                                <option value="0" disabled selected>Talla</option>
+                                                <option *ngFor="let t of talla" value="{{t.id}}">{{t.descripcion}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <select class="form-control" name="color_crear" id="color_crear" [(ngModel)]="value.id_color">
-                                                
+                                            <label for="color_crear">Color</label>
+                                            <select class="form-control" name="color_crear" id="color_crear"
+                                                [(ngModel)]="value.id_color">
+                                                <option value="0" disabled selected>Color</option>
+                                                <option *ngFor="let c of color" value="{{c.id}}">{{c.descripcion}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <br><br><br>
                                     <div class="col-12">
-                                        <input (change)="onChangeImage($event)" type="file" name="imgProd" id="imgProd" accept=".png,.jpg,.jpeg">
+                                        <label>Imagen de representación del producto</label>
+                                        <input (change)="onChangeImage($event)" type="file" name="imgProd" id="imgProd"
+                                            accept=".png,.jpg,.jpeg">
                                     </div>
                                 </div>
                             </div>
@@ -222,34 +250,102 @@
                     <form class="form" onsubmit="return false">
                         <div class="card-body">
                             <!--Form: Editar-->
-                            <!--<div class="container-fluid">
+                            <div class="container-fluid">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <input id="nombre_editar" type="text" [(ngModel)]="editValue.nombre" class="form-control"
-                                                placeholder="Nombres" name="nombre_editar">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <input id="apellido_editar" type="text" [(ngModel)]="editValue.apellido"
-                                                class="form-control" placeholder="Apellidos" name="apellido_editar">
+                                            <label for="nombre_crear">Nombre del producto</label>
+                                            <input type="text" id="nombre_crear" type="text" [(ngModel)]="editValue.nombre"
+                                                class="form-control" placeholder="Nombre del producto" name="nombre_crear">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input id="correo_editar" type="text" [(ngModel)]="editValue.correo" class="form-control"
-                                                placeholder="Correo electrónico" name="correo_editar">
+                                            <label for="descripcion_crear">Descripción del producto</label>
+                                            <textarea id="descripcion_crear" type="text" [(ngModel)]="editValue.descripcion"
+                                                class="form-control" placeholder="Descripción del producto" name="descripcion_crear"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="precio_crear">Precio</label>
+                                            <input id="precio_crear" type="number" [(ngModel)]="editValue.precio" class="form-control"
+                                                placeholder="Precio unitario ($)" name="precio_crear">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="cantidad_crear">Cantidad</label>
+                                            <input id="cantidad_crear" type="number" [(ngModel)]="editValue.cantidad"
+                                                class="form-control" placeholder="Cantidad inicial" name="cantidad_crear">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="minimo_crear">Mínimo</label>
+                                            <input id="minimo_crear" type="number" [(ngModel)]="editValue.stock_minimo"
+                                                class="form-control" placeholder="Stock mínimo" name="minimo_crear">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="existente_crear">Existente</label>
+                                            <input id="existente_crear" type="number" [(ngModel)]="editValue.stock_existente"
+                                                class="form-control" placeholder="Stock existente" name="existente_crear">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input id="password_editar" type="password" [(ngModel)]="editValue.password"
-                                                class="form-control" placeholder="Contraseña" name="password_editar">
+                                            <label for="estadoProducto_crear">Estado del producto</label>
+                                            <select class="form-control" name="estadoProducto_crear" id="estadoProducto_crear"
+                                                [(ngModel)]="editValue.id_estado_prod">
+                                                <option value="1" selected>Activo</option>
+                                                <option value="2">Descontinuado</option>
+                                            </select>
                                         </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="subcategoria_crear">Subcategoría</label>
+                                            <select class="form-control" name="subcategoria_crear" id="subcategoria_crear"
+                                                [(ngModel)]="editValue.id_subcategoria_prod">
+                                                <option value="0" disabled selected>Sub Categoría</option>
+                                                <option *ngFor="let s of subcategoria" value="{{s.id}}">{{s.descripcion}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="talla_crear">Talla</label>
+                                            <select class="form-control" name="talla_crear" id="talla_crear"
+                                                [(ngModel)]="editValue.id_talla">
+                                                <option value="0" disabled selected>Talla</option>
+                                                <option *ngFor="let t of talla" value="{{t.id}}">{{t.descripcion}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="color_crear">Color</label>
+                                            <select class="form-control" name="color_crear" id="color_crear"
+                                                [(ngModel)]="editValue.id_color">
+                                                <option value="0" disabled selected>Color</option>
+                                                <option *ngFor="let c of color" value="{{c.id}}">{{c.descripcion}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br><br><br>
+                                    <div class="col-7">
+                                        <label>Imagen de representación del producto</label>
+                                        <input (change)="onChangeImage($event)" type="file" name="imgProd" id="imgProd"
+                                            accept=".png,.jpg,.jpeg">
+                                    </div>
+                                    <div class="col-5">
+                                        <label>Imagen actual del producto</label>
+                                        <img src="{{getImage(editValue.img)}}" alt="Recurso Imagen producto Edición" width="128" height="128">
                                     </div>
                                 </div>
-                            </div>-->
+                            </div>
                             <!--/Form: Editar-->
                         </div>
                     </form>

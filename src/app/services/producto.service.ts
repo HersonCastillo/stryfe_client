@@ -35,4 +35,7 @@ export class ProductoService {
         image.append("image", file, file.name);
         return this.http.post(`${this.globals.PATH}api/v1/producto/image`, image);
     }
+    mostrarImagen(imageRaw: string): string{
+        return `${this.globals.PATH}image/${imageRaw}`;
+    }
 }
