@@ -42,6 +42,7 @@ export class AdminUsersComponent implements OnInit {
     }
 
     public values: Array<Usuario> = [];
+    public auxValues: Array<Usuario> = [];
     public search: string = "";
 
     public loggerNameLow: string = "administrador";
@@ -179,5 +180,24 @@ export class AdminUsersComponent implements OnInit {
         } catch (ex) {
             Includes.saveErrorLog(ex);
         }
+    }
+    searchEvent(event): void{
+        if(this.auxValues.length == 0)
+            if(this.search.length == 1)
+                this.auxValues = this.values;
+        if(this.auxValues.length > 0)
+            if(this.search.length == 0){
+                this.values = this.auxValues;
+                this.auxValues = [];
+            }
+        if(this.auxValues.length == 0 && this.values.length == 0)
+            this.load(false);
+        if(event.target.value === "")
+            this.load(false);
+        this.values = this.values.filter(res => 
+            res.nombre.toLowerCase().indexOf(this.search.toLowerCase().trim()) >= 0 || 
+            res.apellido.toLowerCase().indexOf(this.search.toLowerCase().trim()) >= 0 || 
+            res.correo.toLowerCase().indexOf(this.search.toLowerCase().trim()) >= 0
+        );
     }
 }

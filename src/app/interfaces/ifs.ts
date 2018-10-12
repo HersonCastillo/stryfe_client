@@ -5,3 +5,5 @@ export * from './producto';
 export * from './descuento';
 export * from './crud-methods';
 export * from './categoria';
+export * from './color';
+export * from './talla';

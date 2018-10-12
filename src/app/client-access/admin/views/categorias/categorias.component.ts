@@ -133,6 +133,8 @@ export class CategoriasComponent implements OnInit {
             }
         if(this.auxCategories.length == 0 && this.categorias.length == 0)
             this.loadCategories(false);
+        if(event.target.value === "")
+            this.loadCategories(false);
         this.categorias = this.categorias.filter(res => res.descripcion.toLowerCase().indexOf(this.searchCategory.toLowerCase().trim()) >= 0);
     }
 }

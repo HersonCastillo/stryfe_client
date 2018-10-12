@@ -58,13 +58,13 @@
             <br>
             <button type="button" class="btn btn-primary" (click)="crearModal()">Agregar {{loggerNameLow}}</button>
         </div>
-        <!--<div class="col">
+        <div class="col">
             <div class="form-group">
                 <label for="{{loggerNameLow}}Search">Buscar {{loggerNameLow}}</label>
-                <input (keyup)="search($event)" [(ngModel)]="search" type="text" class="form-control" id="Search"
+                <input (keyup)="searchEvent($event)" [(ngModel)]="search" type="text" class="form-control" id="Search"
                     placeholder="Escribe algo aquí...">
             </div>
-        </div>-->
+        </div>
     </div>
     <div class="container">
         <br>
@@ -94,7 +94,7 @@
                     </td>
                 </tr>
                 <tr *ngIf="values.length === 0">
-                    <td class="text-center" colspan="3">
+                    <td class="text-center" colspan="5">
                         No se encontraron resultados.
                     </td>
                 </tr>

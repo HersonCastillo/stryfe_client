@@ -149,6 +149,8 @@ export class SubcategoriasComponent implements OnInit {
             }
         if(this.auxSubcategories.length == 0 && this.subcategorias.length == 0)
             this.loadSubcategories(false);
+        if(event.target.value === "")
+            this.loadSubcategories(false);
         this.subcategorias = this.subcategorias.filter(res => res.descripcion.toLowerCase().indexOf(this.searchSubcategory.toLowerCase().trim()) >= 0);
     }
 }
