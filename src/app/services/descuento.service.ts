@@ -14,6 +14,7 @@ export class DescuentoService implements CRUD {
         private globals: Globals
     ){}
     private descuentos: Descuento[];
+    private estados: Array<any>;
     crear(value: Descuento): Observable<Respuesta> {
         return this.http.post<Respuesta>(`${this.globals.PATH}api/v1/descuento`, value);
     }
@@ -29,5 +30,9 @@ export class DescuentoService implements CRUD {
     }
     obtener(value: Descuento): Observable<Descuento> {
         return this.http.get<Descuento>(`${this.globals.PATH}api/v1/descuento/${value.id}`);
+    }
+    listarEstados(): Observable<any>{
+        if(this.estados != null) return of(this.estados);
+        return this.http.get(`${this.globals.PATH}api/v1/descuento/estados`).pipe(map(d => d), tap(nL => this.estados = nL));
     }
 }
