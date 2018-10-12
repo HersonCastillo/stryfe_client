@@ -8,12 +8,12 @@ import { map, tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class AdministradorService implements CRUD{
+export class EmpleadoService implements CRUD{
     constructor(
         private http: HttpClient,
         private globals: Globals
     ){}
-    private administradores: Usuario[];
+    private values: Usuario[];
     crear(value: Usuario): Observable<Respuesta> {
         return this.http.post<Respuesta>(`${this.globals.PATH}api/v1/usuario`, value);
     }
@@ -24,8 +24,8 @@ export class AdministradorService implements CRUD{
         return this.http.delete<Respuesta>(`${this.globals.PATH}api/v1/usuario/${value.id}`);
     }
     listar(reset: boolean): Observable<Usuario[]> {
-        if(!reset) if(this.administradores != null) return of(this.administradores);
-        return this.http.get<Usuario[]>(`${this.globals.PATH}api/v1/usuario`).pipe(map(s => s), tap(nList => this.administradores = nList.filter(user => user.id_tipo_usuario == 1)));
+        if(!reset) if(this.values != null) return of(this.values);
+        return this.http.get<Usuario[]>(`${this.globals.PATH}api/v1/usuario`).pipe(map(s => s), tap(nList => this.values = nList.filter(user => user.id_tipo_usuario == 2)));
     }
     obtener(value: Usuario): Observable<Usuario> {
         return this.http.get<Usuario>(`${this.globals.PATH}api/v1/usuario/${value.id}`);

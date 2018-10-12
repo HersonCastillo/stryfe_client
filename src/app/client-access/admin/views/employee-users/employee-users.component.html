@@ -1,3 +1,233 @@
-<p>
-  employee-users works!
-</p>
+<div class="container">
+    <div class="row">
+        <div class="alert alert-danger col" *ngIf="loggerLocal.errors.length > 0">
+            <table style="width: 100%;">
+                <tbody>
+                    <tr *ngFor="let error of loggerLocal.errors">
+                        <td class="text-left">
+                            {{error}}
+                        </td>
+                        <td class="td-actions text-right">
+                            <button (click)="removeAlert(error, 'errors')" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="alert alert-warning col" *ngIf="loggerLocal.warnings.length > 0">
+            <table style="width: 100%;">
+                <tbody>
+                    <tr *ngFor="let warn of loggerLocal.warnings">
+                        <td class="text-left">
+                            {{warn}}
+                        </td>
+                        <td class="td-actions text-right">
+                            <button (click)="removeAlert(warn, 'warnings')" type="button" rel="tooltip" class="btn btn-warning btn-sm btn-round btn-icon">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="alert alert-success col" *ngIf="loggerLocal.success.length > 0">
+            <table style="width: 100%;">
+                <tbody>
+                    <tr *ngFor="let suc of loggerLocal.success">
+                        <td class="text-left">
+                            {{suc}}
+                        </td>
+                        <td class="td-actions text-right">
+                            <button (click)="removeAlert(suc, 'success')" type="button" rel="tooltip" class="btn btn-success btn-sm btn-round btn-icon">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <br>
+            <button type="button" class="btn btn-primary" (click)="crearModal()">Agregar {{loggerNameLow}}</button>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="{{loggerNameLow}}Search">Buscar {{loggerNameLow}}</label>
+                <input (keyup)="searchEvent($event)" [(ngModel)]="search" type="text" class="form-control" id="Search"
+                    placeholder="Escribe algo aquí...">
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Correo electrónico</th>
+                    <th class="text-right">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of values">
+                    <td class="text-center">{{x.id}}</td>
+                    <td>{{x.nombre}}</td>
+                    <td>{{x.apellido}}</td>
+                    <td>{{x.correo}}</td>
+                    <td class="td-actions text-right">
+                        <button (click)="editarModal(x)" type="button" style="margin-right: 5px;" rel="tooltip" class="btn btn-success btn-sm btn-round btn-icon">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button (click)="eliminar(x)" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr *ngIf="values.length === 0">
+                    <td class="text-center" colspan="5">
+                        No se encontraron resultados.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--modals-->
+<div class="modal fade modal-primary" id="crear{{loggerNameUpp}}" tabindex="-1" role="dialog" aria-labelledby="xyz"
+    aria-hidden="true">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="card card-login card-plain">
+                <div class="modal-header justify-content-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="modal-title text-center">
+                        <h5>Agregar {{loggerNameLow}}</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form" onsubmit="return false">
+                        <div class="card-body">
+                            <!--Form: Crear-->
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input id="nombre_crear" type="text" [(ngModel)]="value.nombre" class="form-control"
+                                                placeholder="Nombres" name="nombre_crear">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input id="apellido_crear" type="text" [(ngModel)]="value.apellido" class="form-control"
+                                                placeholder="Apellidos" name="apellido_crear">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input id="correo_crear" type="text" [(ngModel)]="value.correo" class="form-control"
+                                                placeholder="Correo electrónico" name="correo_crear">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input id="password_crear" type="password" [(ngModel)]="value.password"
+                                                class="form-control" placeholder="Contraseña" name="password_crear">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/Form: Crear-->
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="row" style="width: 100%; margin-right: 0px;">
+                        <div class="col">
+                            <a data-dismiss="modal" class="btn btn-default btn-round btn-block">Cancelar</a>
+                        </div>
+                        <div class="col">
+                            <a (click)="crear()" class="btn btn-success btn-round btn-block">Agregar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-primary" id="editar{{loggerNameUpp}}" tabindex="-1" role="dialog" aria-labelledby="xyz"
+    aria-hidden="true">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="card card-login card-plain">
+                <div class="modal-header justify-content-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="modal-title text-center">
+                        <h5>Editar {{loggerNameLow}}</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form" onsubmit="return false">
+                        <div class="card-body">
+                            <!--Form: Editar-->
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input id="nombre_editar" type="text" [(ngModel)]="editValue.nombre" class="form-control"
+                                                placeholder="Nombres" name="nombre_editar">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input id="apellido_editar" type="text" [(ngModel)]="editValue.apellido"
+                                                class="form-control" placeholder="Apellidos" name="apellido_editar">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input id="correo_editar" type="text" [(ngModel)]="editValue.correo" class="form-control"
+                                                placeholder="Correo electrónico" name="correo_editar">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input id="password_editar" type="password" [(ngModel)]="editValue.password"
+                                                class="form-control" placeholder="Contraseña" name="password_editar">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/Form: Editar-->
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="row" style="width: 100%; margin-right: 0px;">
+                        <div class="col">
+                            <a data-dismiss="modal" class="btn btn-default btn-round btn-block">Cancelar</a>
+                        </div>
+                        <div class="col">
+                            <a (click)="editar()" class="btn btn-success btn-round btn-block">Editar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

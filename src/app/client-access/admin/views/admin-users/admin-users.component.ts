@@ -66,7 +66,7 @@ export class AdminUsersComponent implements OnInit {
     }
     load(reset: boolean): void {
         this.provider.listar(reset).subscribe(u => {
-            this.values = u;
+            this.values = u.filter(user => user.id_tipo_usuario == 1);
             if (!localStorage.getItem('u_data')) {
                 this.values = [];
                 this.loggerLocal.warnings.push("No se puede obtener tu información.");
@@ -108,11 +108,11 @@ export class AdminUsersComponent implements OnInit {
     crearModal(): void {
         $(`#crear${this.loggerNameUpp}`).modal('show');
     }
-    eliminar(admin: Usuario): void {
-        Includes.question("¡Espera un momento!", `¿Estás seguro de que quieres eliminar a '${admin.nombre}'?`, () => {
+    eliminar(val: Usuario): void {
+        Includes.question("¡Espera un momento!", `¿Estás seguro de que quieres eliminar a '${val.nombre}'?`, () => {
             let alert: string = `Eliminando ${this.loggerNameLow}...`;
             this.loggerLocal.warnings.push(alert);
-            this.provider.eliminar(admin).subscribe(r => {
+            this.provider.eliminar(val).subscribe(r => {
                 this.removeAlert(alert, 'warnings');
                 if (r.success) {
                     this.loggerLocal.success.push(`El ${this.loggerNameLow} se eliminó con éxito.`);
@@ -169,9 +169,9 @@ export class AdminUsersComponent implements OnInit {
             });
         } else this.loggerLocal.warnings.push("Los datos de edición no son correctos.");
     }
-    editarModal(admin: Usuario) {
+    editarModal(val: Usuario) {
         $(`#editar${this.loggerNameUpp}`).modal('show');
-        this.editValue = admin;
+        this.editValue = val;
         this.editValue.password = "";
     }
     removeAlert(alert: string, listArr: string): void {
