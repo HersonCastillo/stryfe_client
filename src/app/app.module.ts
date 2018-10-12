@@ -25,6 +25,9 @@ import { SubcategoriasComponent } from './client-access/admin/views/subcategoria
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmployeeComponent } from './client-access/employee/employee/employee.component';
+import { EmployeeUsersComponent } from './client-access/admin/views/employee-users/employee-users.component';
+import { TallaComponent } from './client-access/admin/views/talla/talla.component';
+import { ColorComponent } from './client-access/admin/views/color/color.component';
 
 export function Token(): string {
     let token: string = localStorage.getItem('token');
@@ -48,7 +51,10 @@ const app: Routes = [
             { path: '', redirectTo: 'productos', pathMatch: 'full' }
         ] },
         { path: 'administrators', component: AdminUsersComponent },
-        { path: '', redirectTo: 'categorias', pathMatch: 'full' }
+        { path: '', redirectTo: 'categorias', pathMatch: 'full' },
+        { path: 'colores', component: ColorComponent },
+        { path: 'tallas', component: TallaComponent },
+        { path: 'employees', component: EmployeeUsersComponent }
     ], canActivate: [AuthGuardAdmin] },
     { path: 'me', component: CpanelUserComponent, children: [
         { path: 'home', component: HomeUserComponent }, 
@@ -75,7 +81,10 @@ const app: Routes = [
         ProductosComponent,
         DescuentosComponent,
         SubcategoriasComponent,
-        EmployeeComponent
+        EmployeeComponent,
+        EmployeeUsersComponent,
+        TallaComponent,
+        ColorComponent
     ],
     imports: [
         BrowserModule,

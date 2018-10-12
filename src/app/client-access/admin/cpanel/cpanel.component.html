@@ -1,15 +1,12 @@
 <div class="sidebar" data-color="brown" data-active-color="danger">
     <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+        <a [routerLink]="['/admin']" class="simple-text logo-mini">
             <div class="logo-image-small">
-                <img src="../assets/img/logo-small.png">
+                <img src="assets/img/logo-small.png">
             </div>
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a [routerLink]="['/']" class="simple-text logo-normal">
             Stryfe
-            <!-- <div class="logo-image-big">
-          <img src="../assets/img/logo-big.png">
-        </div> -->
         </a>
     </div>
     <div class="sidebar-wrapper">
@@ -40,7 +37,7 @@
         <ul class="nav" style="overflow: hidden;">
             <li>
                 <a data-toggle="collapse" href="#categoria">
-                    <i class="nc-icon nc-box"></i>
+                    <i class="nc-icon nc-single-copy-04"></i>
                     <p>
                         CATEGORÍAS
                         <b class="caret"></b>
@@ -89,16 +86,33 @@
                 </div>
             </li>
             <li>
+                <a [routerLink]="['colores']">
+                    <i class="nc-icon nc-tag-content"></i>
+                    <p>Colores</p>
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="['tallas']">
+                    <i class="nc-icon nc-app"></i>
+                    <p>Tallas</p>
+                </a>
+            </li>
+            <li>
                 <a [routerLink]="['administrators']">
                     <i class="nc-icon nc-circle-10"></i>
-                    <p>ADMINISTRADORES</p>
+                    <p>Administradores</p>
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="['employees']">
+                    <i class="nc-icon nc-circle-10"></i>
+                    <p>Empleados</p>
                 </a>
             </li>
         </ul>
     </div>
 </div>
 <div class="main-panel">
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
         <div class="container-fluid">
             <div class="navbar-wrapper">
@@ -115,20 +129,11 @@
                         <span class="navbar-toggler-bar bar3"></span>
                     </button>
                 </div>
-                <a class="navbar-brand" href="#pablo">Administración de Stryfe</a>
+                <a class="navbar-brand" [routerLink]="['/admin']">Administración de Stryfe</a>
             </div>
         </div>
     </nav>
-    <!-- End Navbar -->
-    <!-- <div class="panel-header">
-
-<canvas id="bigDashboardChart"></canvas>
-
-
-</div> -->
     <div class="content">
         <router-outlet></router-outlet>
     </div>
 </div>
-
-<!--modals-->
