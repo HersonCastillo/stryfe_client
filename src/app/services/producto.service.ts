@@ -14,6 +14,7 @@ export class ProductoService {
         private globals: Globals
     ){}
     private productos: Producto[];
+    private publicProductos: Producto[];
     crear(value: Producto): Observable<Respuesta> {
         return this.http.post<Respuesta>(`${this.globals.PATH}api/v1/producto`, value);
     }
@@ -37,5 +38,9 @@ export class ProductoService {
     }
     mostrarImagen(imageRaw: string): string{
         return `${this.globals.PATH}image/${imageRaw}`;
+    }
+    publicListar(reset: boolean): Observable<Producto[]> {
+        if(!reset) if(this.publicProductos != null) return of(this.publicProductos);
+        return this.http.get<Producto[]>(`${this.globals.PATH}public/producto`).pipe(map(s => s), tap(nList => this.publicProductos = nList));
     }
 }

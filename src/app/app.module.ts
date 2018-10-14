@@ -6,8 +6,8 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrarComponent } from './registrar/registrar.component';
-import { HomeComponent } from './home/home.component';
-import { ErrorComponent } from './error/error.component';
+import { HomeComponent } from './client-access/home/home.component';
+import { ErrorComponent } from './client-access/error/error.component';
 import { CpanelAdminComponent } from './client-access/admin/cpanel/cpanel.component';
 import { CategoriasComponent } from './client-access/admin/views/categorias/categorias.component';
 import { CpanelUserComponent } from './client-access/users/cpanel/cpanel.component';
@@ -28,6 +28,7 @@ import { EmployeeComponent } from './client-access/employee/employee/employee.co
 import { EmployeeUsersComponent } from './client-access/admin/views/employee-users/employee-users.component';
 import { TallaComponent } from './client-access/admin/views/talla/talla.component';
 import { ColorComponent } from './client-access/admin/views/color/color.component';
+import { BuscarComponent } from './client-access/buscar/buscar.component';
 
 export function Token(): string {
     let token: string = localStorage.getItem('token');
@@ -39,6 +40,7 @@ const app: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [AuthGuardLogin] },
     { path: 'registrar', component: RegistrarComponent, canActivate: [AuthGuardLogin] },
     { path: 'home', component: HomeComponent },
+    { path: 'buscar/:producto', component: BuscarComponent },
     { path: 'admin', component: CpanelAdminComponent, children: [
         { path: 'categorias', children: [
             { path: 'categorias', component: CategoriasComponent },
@@ -84,7 +86,8 @@ const app: Routes = [
         EmployeeComponent,
         EmployeeUsersComponent,
         TallaComponent,
-        ColorComponent
+        ColorComponent,
+        BuscarComponent
     ],
     imports: [
         BrowserModule,
@@ -99,8 +102,7 @@ const app: Routes = [
             config: {
                 tokenGetter: Token,
                 whitelistedDomains: [
-                    'localhost:3500',
-                    'localhost:4200'
+                    'localhost:3500'
                 ],
                 skipWhenExpired: true
             }
