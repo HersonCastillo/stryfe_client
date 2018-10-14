@@ -29,11 +29,13 @@ import { EmployeeUsersComponent } from './client-access/admin/views/employee-use
 import { TallaComponent } from './client-access/admin/views/talla/talla.component';
 import { ColorComponent } from './client-access/admin/views/color/color.component';
 import { BuscarComponent } from './client-access/buscar/buscar.component';
+import { ListaDeseosComponent } from './client-access/users/views/lista-deseos/lista-deseos.component';
+import { CarritoComponent } from './client-access/users/views/carrito/carrito.component';
+import { MetodosPagoComponent } from './client-access/users/views/metodos-pago/metodos-pago.component';
+import { ConfiguracionComponent } from './client-access/users/views/configuracion/configuracion.component';
 
 export function Token(): string {
-    let token: string = localStorage.getItem('token');
-    if(token != null && token.length > 150) return token;
-    return null;
+    return localStorage.getItem('token');
 }
 
 const app: Routes = [
@@ -60,6 +62,10 @@ const app: Routes = [
     ], canActivate: [AuthGuardAdmin] },
     { path: 'me', component: CpanelUserComponent, children: [
         { path: 'home', component: HomeUserComponent }, 
+        { path: 'lista', component: ListaDeseosComponent },
+        { path: 'carrito', component: CarritoComponent },
+        { path: 'configuracion', component: ConfiguracionComponent },
+        { path: 'metodos', component: MetodosPagoComponent },
         { path: '', redirectTo: 'home', pathMatch: 'full' }
     ], canActivate: [AuthGuardClient] },
     { path: 'employee', component: EmployeeComponent },
@@ -87,7 +93,11 @@ const app: Routes = [
         EmployeeUsersComponent,
         TallaComponent,
         ColorComponent,
-        BuscarComponent
+        BuscarComponent,
+        ListaDeseosComponent,
+        CarritoComponent,
+        MetodosPagoComponent,
+        ConfiguracionComponent
     ],
     imports: [
         BrowserModule,
