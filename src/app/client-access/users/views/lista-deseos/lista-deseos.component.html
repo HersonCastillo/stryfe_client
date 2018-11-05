@@ -1,3 +1,15 @@
-<p>
-  lista-deseos works!
-</p>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="productos.length == 0">
+            <td>
+                No hay productos para mostrar.
+            </td>
+        </tr>
+    </tbody>
+</table>
