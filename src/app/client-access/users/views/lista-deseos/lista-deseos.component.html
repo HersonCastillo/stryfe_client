@@ -2,10 +2,27 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Producto</th>
+            <th>Nombre del producto</th>
+            <th>Descripción</th>
+            <th>Precio ($)</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
+        <tr *ngFor="let producto of productos">
+            <td>{{producto.nombre}}</td>
+            <td>{{producto.descripcion}}</td>
+            <td>${{producto.precio}}</td>
+            <td>
+                <img [src]="getImage(producto.img)" alt="Producto" width="100px">
+            </td>
+            <td>
+                <button class="btn btn-danger" (click)="quitLS(producto)">
+                    Quitar de la lista
+                </button>
+            </td>
+        </tr>
         <tr *ngIf="productos.length == 0">
             <td>
                 No hay productos para mostrar.
