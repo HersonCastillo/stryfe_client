@@ -14,11 +14,14 @@
                 <li class="nav-item active">
                     <a [routerLink]="['/']" class="nav-link">Inicio</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="!sessionAllow">
                     <a [routerLink]="['/login']" class="nav-link">Iniciar sesión</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="!sessionAllow">
                     <a [routerLink]="['/registrar']" class="nav-link">Registrarme</a>
+                </li>
+                <li class="nav-item" *ngIf="sessionAllow">
+                    <a [routerLink]="['/me']" class="nav-link">Mi Perfil</a>
                 </li>
             </ul>
 
@@ -36,19 +39,66 @@
 <div class="container-fluid" style="background-color: #f4f3ef;">
     <br>
     <div class="row">
-        <div class="col-md-3 col" *ngFor="let producto of productos">
+        <div class="col-md-3" *ngFor="let producto of productos">
             <div class="card" style="width: 20rem;">
-                <img class="card-img-top" [src]="getImage(producto.img)" [alt]="producto.nombre" height="256">
+                <img class="card-img-top" [src]="getImage(producto.img)" [alt]="producto.nombre" style="max-height: 300px;">
                 <div class="card-body">
                     <h4 class="card-title">{{producto.nombre}}</h4>
                     <p class="card-text">{{producto.descripcion}}</p>
-                    <a href="#" class="btn btn-primary"><span class="nc-icon nc-cart-simple"></span> Carrito</a>
+                    <button class="btn btn-primary" (click)="agregarAlCarrito(producto)">
+                        <span class="nc-icon nc-cart-simple"></span>
+                        Carrito
+                    </button>
                     <button *ngIf="!isExistLD(producto)" (click)="agregarAListaDeseos(producto)" class="btn btn-default">
                         <span class="nc-icon nc-bookmark-2"></span> Mis deseos
                     </button>
                     <button *ngIf="isExistLD(producto)" (click)="quitarDeListaDeseos(producto)" class="btn btn-danger">
                         <span class="nc-icon nc-basket"></span> No lo deseo
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-primary" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="xyz" aria-hidden="true">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="card card-login card-plain">
+                <div class="modal-header justify-content-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="modal-title text-center">
+                        <h5>Carrito de compras</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form" onsubmit="return false">
+                        <div class="card-body">
+                            <label for="carritoCantidad">
+                                Cantidad de producto
+                            </label>
+                            <br>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="nc-icon nc-book-bookmark"></i></span>
+                                </div>
+                                <input id="carritoCantidad" type="number" [(ngModel)]="value.cantidad" class="form-control"
+                                    placeholder="Cantidad" name="carritoCantidad">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="row" style="width: 100%; margin-right: 0px;">
+                        <div class="col">
+                            <a data-dismiss="modal" class="btn btn-default btn-round btn-block">Cancelar</a>
+                        </div>
+                        <div class="col">
+                            <a (click)="guardarAlCarrito()" class="btn btn-success btn-round btn-block">Editar</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

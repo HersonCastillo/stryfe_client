@@ -7,3 +7,4 @@ export * from './crud-methods';
 export * from './categoria';
 export * from './color';
 export * from './talla';
+export * from './carrito';
