@@ -8,3 +8,5 @@ export * from './categoria';
 export * from './color';
 export * from './talla';
 export * from './carrito';
+export * from './orden';
+export * from './reporte';

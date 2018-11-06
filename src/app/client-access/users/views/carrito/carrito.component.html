@@ -1,3 +1,91 @@
-<p>
-  carrito works!
-</p>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre del producto</th>
+            <th>Descripción</th>
+            <th>Precio ($)</th>
+            <th>Cantidad solicitada</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let producto of carrito">
+            <td>{{producto.producto.nombre}}</td>
+            <td>{{producto.producto.descripcion}}</td>
+            <td>${{producto.producto.precio}}</td>
+            <td>{{producto.carrito.cantidad}}</td>
+            <td>
+                <img [src]="getImage(producto.producto.img)" alt="Producto" width="100px">
+            </td>
+            <td>
+                <button class="btn btn-default" (click)="editarCantidadModal(producto.carrito)">
+                    Cambiar cantidad
+                </button>
+                <br><br>
+                <button class="btn btn-danger" (click)="quitarLista(producto.carrito)">
+                    Quitar de la lista
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="carrito.length == 0">
+            <td colspan="6">
+                No hay productos para mostrar.
+            </td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<div class="container" *ngIf="carrito.length > 0">
+    <div class="div-block">
+        <span class="div-flex"></span>
+        <button class="btn-primary btn">PAGAR</button>
+    </div>
+    <span>Precio total a pagar </span>
+    <h1>${{precioAPagar}}</h1>
+</div>
+
+<div class="modal fade modal-primary" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="xyz" aria-hidden="true">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="card card-login card-plain">
+                <div class="modal-header justify-content-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="modal-title text-center">
+                        <h5>Carrito de compras</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form" onsubmit="return false">
+                        <div class="card-body">
+                            <label for="carritoCantidad">
+                                Cantidad de producto
+                            </label>
+                            <br>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="nc-icon nc-book-bookmark"></i></span>
+                                </div>
+                                <input id="carritoCantidad" type="number" [(ngModel)]="value.cantidad" class="form-control"
+                                    placeholder="Cantidad" name="carritoCantidad">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="row" style="width: 100%; margin-right: 0px;">
+                        <div class="col">
+                            <a data-dismiss="modal" class="btn btn-default btn-round btn-block">Cancelar</a>
+                        </div>
+                        <div class="col">
+                            <a (click)="editarCantidad()" class="btn btn-success btn-round btn-block">Editar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

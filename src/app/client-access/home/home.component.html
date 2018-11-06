@@ -45,9 +45,13 @@
                 <div class="card-body">
                     <h4 class="card-title">{{producto.nombre}}</h4>
                     <p class="card-text">{{producto.descripcion}}</p>
-                    <button class="btn btn-primary" (click)="agregarAlCarrito(producto)">
+                    <button class="btn btn-primary" (click)="agregarAlCarrito(producto)" *ngIf="!isInCarrito(producto)">
                         <span class="nc-icon nc-cart-simple"></span>
                         Carrito
+                    </button>
+                    <button class="btn btn-primary" [routerLink]="['/me', 'carrito']" *ngIf="isInCarrito(producto)">
+                        <span class="nc-icon nc-cart-simple"></span>
+                        Ver
                     </button>
                     <button *ngIf="!isExistLD(producto)" (click)="agregarAListaDeseos(producto)" class="btn btn-default">
                         <span class="nc-icon nc-bookmark-2"></span> Mis deseos
@@ -96,7 +100,7 @@
                             <a data-dismiss="modal" class="btn btn-default btn-round btn-block">Cancelar</a>
                         </div>
                         <div class="col">
-                            <a (click)="guardarAlCarrito()" class="btn btn-success btn-round btn-block">Editar</a>
+                            <a (click)="guardarAlCarrito()" class="btn btn-success btn-round btn-block">Agregar</a>
                         </div>
                     </div>
                 </div>

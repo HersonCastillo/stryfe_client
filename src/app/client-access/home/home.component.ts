@@ -27,8 +27,9 @@ export class HomeComponent implements OnInit {
     };
     isInCarrito(prod: Producto): boolean {
         if(this.sessionAllow){
-            return this.carrito.filter(r => r.id_producto == prod.id).length == 0;
-        } else return true;
+            return this.carrito.filter(r => r.id_producto == prod.id).length > 0;
+        } 
+        return false;
     }
     ngOnInit(){
         this.sessionAllow = localStorage.getItem('token') != null;
