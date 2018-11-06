@@ -39,26 +39,26 @@
 <div class="container-fluid" style="background-color: #f4f3ef;">
     <br>
     <div class="row">
-        <div class="col-md-3" *ngFor="let producto of productos">
-            <div class="card" style="width: 20rem;">
-                <img class="card-img-top" [src]="getImage(producto.img)" [alt]="producto.nombre" style="max-height: 300px;">
+        <div class="col-md-2" *ngFor="let producto of productos">
+            <div class="card">
+                <img class="card-img-top" [src]="getImage(producto.img)" [alt]="producto.nombre" style="height: 195px;">
                 <div class="card-body">
-                    <h4 class="card-title">{{producto.nombre}}</h4>
-                    <p class="card-text">{{producto.descripcion}}</p>
-                    <button class="btn btn-primary" (click)="agregarAlCarrito(producto)" *ngIf="!isInCarrito(producto)">
-                        <span class="nc-icon nc-cart-simple"></span>
-                        Carrito
-                    </button>
-                    <button class="btn btn-primary" [routerLink]="['/me', 'carrito']" *ngIf="isInCarrito(producto)">
-                        <span class="nc-icon nc-cart-simple"></span>
-                        Ver
-                    </button>
-                    <button *ngIf="!isExistLD(producto)" (click)="agregarAListaDeseos(producto)" class="btn btn-default">
-                        <span class="nc-icon nc-bookmark-2"></span> Mis deseos
-                    </button>
-                    <button *ngIf="isExistLD(producto)" (click)="quitarDeListaDeseos(producto)" class="btn btn-danger">
-                        <span class="nc-icon nc-basket"></span> No lo deseo
-                    </button>
+                    <h4 class="card-title">{{producto.nombre}} <b>${{producto.precio}}</b></h4>
+                    <div class="div-block">
+                        <span class="div-flex"></span>
+                        <button title="Agregar al carrito" class="btn btn-primary" (click)="agregarAlCarrito(producto)" *ngIf="!isInCarrito(producto)">
+                            <span class="nc-icon nc-cart-simple"></span>
+                        </button>
+                        <button title="Carrito" class="btn btn-primary" [routerLink]="['/me', 'carrito']" *ngIf="isInCarrito(producto)">
+                            <span class="nc-icon nc-check-2"></span>
+                        </button>
+                        <button title="Agrega a lista de deseos" *ngIf="!isExistLD(producto)" (click)="agregarAListaDeseos(producto)" class="btn btn-default">
+                            <span class="nc-icon nc-bookmark-2"></span>
+                        </button>
+                        <button title="Quitar de lista de deseos" *ngIf="isExistLD(producto)" (click)="quitarDeListaDeseos(producto)" class="btn btn-danger">
+                            <span class="nc-icon nc-basket"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
