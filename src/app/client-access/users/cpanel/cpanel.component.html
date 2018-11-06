@@ -41,31 +41,31 @@
                     <p>VISITAR SITIO</p>
                 </a>
             </li>
-            <li>
+            <li [routerLinkActive]="['active']">
                 <a [routerLink]="['home']">
                     <i class="nc-icon nc-tag-content"></i>
                     <p>Mis compras</p>
                 </a>
             </li>
-            <li>
+            <li [routerLinkActive]="['active']">
                 <a [routerLink]="['lista']">
                     <i class="nc-icon nc-favourite-28"></i>
                     <p>Lista de deseos</p>
                 </a>
             </li>
-            <li>
+            <li [routerLinkActive]="['active']">
                 <a [routerLink]="['carrito']">
                     <i class="nc-icon nc-cart-simple"></i>
                     <p>Carrito de compras</p>
                 </a>
             </li>
-            <li>
+            <li [routerLinkActive]="['active']">
                 <a [routerLink]="['metodos']">
                     <i class="nc-icon nc-credit-card"></i>
                     <p>Métodos de pago</p>
                 </a>
             </li>
-            <li>
+            <li [routerLinkActive]="['active']">
                 <a [routerLink]="['configuracion']">
                     <i class="nc-icon nc-settings"></i>
                     <p>Configuración</p>
@@ -75,7 +75,6 @@
     </div>
 </div>
 <div class="main-panel">
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
         <div class="container-fluid">
             <div class="navbar-wrapper">
@@ -120,13 +119,6 @@
             </div>
         </div>
     </nav>
-    <!-- End Navbar -->
-    <!-- <div class="panel-header">
-
-<canvas id="bigDashboardChart"></canvas>
-
-
-</div> -->
     <div class="content">
         <router-outlet></router-outlet>
     </div>

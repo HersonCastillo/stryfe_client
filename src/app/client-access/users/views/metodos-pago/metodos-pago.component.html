@@ -1,3 +1,79 @@
-<p>
-  metodos-pago works!
-</p>
+<div class="card">
+    <div class="card-header">
+        <h5>Métodos de pago</h5>
+    </div>
+    <div class="card-body">
+        <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+                <ul id="tabs" class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#home" role="tab" aria-expanded="true"
+                            aria-selected="false">PayPal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-expanded="false"
+                            aria-selected="false">Tarjeta de crédito/débito</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="my-tab-content" class="tab-content text-center">
+            <div class="tab-pane active show" id="home" role="tabpanel" aria-expanded="true">
+                <div class="container">
+                    <form>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico de PayPal</label>
+                            <input type="email" name="email" id="email" class="form-control" autocomplete="off">
+                        </div>
+                        <div class="div-bock">
+                            <span class="div-flex"></span>
+                            <button class="btn btn-primary">
+                                GUARDAR
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane" id="profile" role="tabpanel" aria-expanded="false">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="numeroCuenta">Número de la tarjeta</label>
+                                <input type="number" maxlength="16" name="numeroCuenta" id="numeroCuenta" class="form-control"
+                                    autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="ccv">CCV</label>
+                                <input type="number" maxlength="3" name="ccv" id="ccv" class="form-control"
+                                    autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mes">Mes de vencimiento</label>
+                                <input type="number" maxlength="2" name="mes" id="mes" class="form-control"
+                                    autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="year">Año de vencimiento</label>
+                                <input type="number" maxlength="4" minlength="4" name="year" id="year" class="form-control"
+                                    autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-bock">
+                        <span class="div-flex"></span>
+                        <button class="btn btn-primary">
+                            GUARDAR
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
