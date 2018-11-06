@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg bg-primary">
+    <div class="container">
+        <a class="navbar-brand">
+            {{producto.nombre}}
+        </a>
+    </div>
+</nav>
+<div class="container" style="background-color: #f4f3ef; border-radius: 10px;">
+    <div class="row">
+        <div class="card" style="margin: 30px; padding: 10px; width: 100%;">
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img [src]="getImage(producto.img)" alt="{{producto.nombre}}" style="max-width: 100%;">
+                        </div>
+                        <div class="col-md-8">
+                            <h1>{{producto.nombre}}</h1>
+                            <p>
+                                {{producto.descripcion}}
+                            </p>
+                            <h3>${{producto.precio}}</h3>
+                            <div class="div-block">
+                                <span class="div-flex"></span>
+                                <button class="btn btn-primary">
+                                    Agregar al carrito
+                                </button>
+                                <button class="btn btn-secondary">
+                                    Agregar a lista de deseos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -31,6 +31,9 @@ export class ProductoService implements CRUD<Producto> {
     obtener(value: Producto): Observable<Producto> {
         return this.http.get<Producto>(`${this.globals.PATH}api/v1/producto/${value.id}`);
     }
+    obtenerPublic(value: Producto): Observable<Producto> {
+        return this.http.get<Producto>(`${this.globals.PATH}public/producto/${value.id}`);
+    }
     guardarImagen(file: File): Observable<Respuesta>{
         let image = new FormData();
         image.append("image", file, file.name);
@@ -42,5 +45,8 @@ export class ProductoService implements CRUD<Producto> {
     publicListar(reset: boolean): Observable<Producto[]> {
         if(!reset) if(this.publicProductos != null) return of(this.publicProductos);
         return this.http.get<Producto[]>(`${this.globals.PATH}public/producto`).pipe(map(s => s), tap(nList => this.publicProductos = nList));
+    }
+    random(): Observable<Producto[]>{
+        return this.http.get<Producto[]>(`${this.globals.PATH}public/producto/random`);
     }
 }

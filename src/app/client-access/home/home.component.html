@@ -41,7 +41,7 @@
     <div class="row">
         <div class="col-md-2" *ngFor="let producto of productos">
             <div class="card">
-                <img class="card-img-top" [src]="getImage(producto.img)" [alt]="producto.nombre" style="height: 195px;">
+                <img [routerLink]="['/producto', producto.id]" class="card-img-top" [src]="getImage(producto.img)" [alt]="producto.nombre" style="height: 195px;">
                 <div class="card-body">
                     <h4 class="card-title">{{producto.nombre}} <b>${{producto.precio}}</b></h4>
                     <div class="div-block">
