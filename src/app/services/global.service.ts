@@ -4,6 +4,10 @@ import { Injectable } from '@angular/core';
 })
 export class Globals {
     constructor(){}
-    public PATH = "http://localhost:3500/";
-    //public PATH = "/";
+    private _PATH = "http://localhost:3500/";
+    //private _PATH = "/";
+
+    get PATH(){
+        return this._PATH;
+    }
 }

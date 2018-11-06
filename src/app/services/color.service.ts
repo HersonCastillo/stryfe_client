@@ -8,7 +8,7 @@ import { map, tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class ColorService implements CRUD {
+export class ColorService implements CRUD<Color> {
     constructor(
         private http: HttpClient,
         private globals: Globals

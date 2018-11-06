@@ -8,7 +8,7 @@ import { map, tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class TallaService implements CRUD {
+export class TallaService implements CRUD<Talla> {
     constructor(
         private http: HttpClient,
         private globals: Globals

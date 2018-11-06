@@ -8,7 +8,7 @@ import { map, tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class SubcategoriaService implements CRUD {
+export class SubcategoriaService implements CRUD<Subcategoria> {
     constructor(
         private http: HttpClient,
         private globals: Globals

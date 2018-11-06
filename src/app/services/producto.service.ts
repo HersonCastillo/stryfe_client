@@ -8,7 +8,7 @@ import { map, tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class ProductoService {
+export class ProductoService implements CRUD<Producto> {
     constructor(
         private http: HttpClient,
         private globals: Globals

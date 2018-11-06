@@ -6,7 +6,7 @@ import { Globals } from './global.service';
 @Injectable({
     providedIn: 'root'
 })
-export class CarritoService implements CRUD {
+export class CarritoService implements CRUD<Carrito> {
     constructor(
         private http: HttpClient,
         private globals: Globals
