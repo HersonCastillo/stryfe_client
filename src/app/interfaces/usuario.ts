@@ -5,12 +5,12 @@ export interface Usuario {
     dui?: string,
     fecha_nac?: Date
     genero?: number
-    id: number
-    id_tipo_usuario: number
+    id?: number
+    id_tipo_usuario?: number
     img?: string
     nombre: string
     password: string,
     telefono?: string
-    token: string
+    token?: string
     verificado?: number
 }

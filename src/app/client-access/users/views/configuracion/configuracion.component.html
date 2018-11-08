@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <h5>Información del perfil</h5>
@@ -10,31 +10,32 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nombre">Nombres</label>
-                                        <input type="text" id="nombre" class="form-control">
+                                        <input [(ngModel)]="usuario.nombre" type="text" id="nombre" name="nombre" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="apellido">Apellidos</label>
-                                        <input type="text" id="apellido" class="form-control">
+                                        <input [(ngModel)]="usuario.apellido" type="text" name="apellido" id="apellido" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="email">Correo electrónico</label>
-                                        <input readonly="true" type="email" id="email" class="form-control">
+                                        <input [value]="usuario.correo" readonly="true" name="email" type="email" id="email" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="fechanac">Fecha de nacimiento</label>
-                                        <input type="date" id="fechanac" class="form-control">
+                                        <input [ngModel]="usuario.fecha_nac | date:'yyyy-MM-dd'" [(ngModel)]="usuario.fecha_nac" type="date" name="fechanac" id="fechanac" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="gen">Género</label>
-                                        <select name="gen" id="gen" class="form-control">
+                                        <select [(ngModel)]="usuario.genero" name="gen" name="gen" id="gen" class="form-control">
+                                            <option value="0" disabled selected>Sin seleccionar</option>
                                             <option value="1" selected>Hombre</option>
                                             <option value="2">Mujer</option>
                                             <option value="3">Otro</option>
@@ -44,38 +45,30 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="tel">Teléfono</label>
-                                        <input type="text" id="tel" class="form-control">
+                                        <input [(ngModel)]="usuario.telefono" name="tel" type="text" id="tel" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="dui">DUI</label>
-                                        <input type="text" id="dui" class="form-control">
+                                        <input [(ngModel)]="usuario.dui" name="dui" type="text" id="dui" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="dir">Dirección</label>
-                                        <textarea name="dir" id="dir" class="form-control"></textarea>
+                                        <textarea [(ngModel)]="usuario.direccion" name="dir" name="dir" id="dir" class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="div-block">
                                 <span class="div-flex"></span>
-                                <button class="btn btn-primary">
+                                <button class="btn btn-primary" [disabled]="isAllowed || isLoad" (click)="save()">
                                     Guardar cambios
                                 </button>
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Marketing</h5>
-                    
                 </div>
             </div>
         </div>

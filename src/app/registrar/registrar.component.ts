@@ -36,9 +36,17 @@ export class RegistrarComponent implements OnInit {
                         this.errors = [];
                         this.errors.push('Ocurrió un error al guardar. Verifica los datos.');
                     }else {
-                        $("#modal-accept").modal({
-                            show: true,
-                            keyboard: false
+                        this.login.validar(this.data.correo).subscribe(r => {
+                            if(r.success){
+                                $("#modal-accept").modal({
+                                    show: true,
+                                    keyboard: false
+                                });
+                            } else {
+                                this.errors.push("Error al enviar el correo de verificación al usuario");
+                            }
+                        }, err => {
+                            this.errors.push("El servidor no puede enviar el correo de verificación al usuario");
                         });
                     }
                     //this.router.navigate(['login']);

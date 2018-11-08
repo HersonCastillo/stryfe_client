@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Includes } from '../utils/Includes';
 declare var $: any;
 @Component({
     selector: 'app-login',
@@ -10,7 +11,8 @@ declare var $: any;
 export class LoginComponent implements OnInit {
     constructor(
         private loginProvider: LoginService,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute
     ){}
     public data = {
         correo: "",
@@ -20,6 +22,14 @@ export class LoginComponent implements OnInit {
     public isLoad: boolean = false;
     ngOnInit(){
         $("title").text("Iniciar sesión");
+        this.route.queryParams.subscribe(q => {
+            let val = q['val'];
+            if(val){
+                Includes.alert("¡Bien!", "Cuenta verificada", "success", () => {
+                    this.router.navigate(['/login']);
+                });
+            }
+        });
     }
     login(): void{
         if(this.data.correo.length && this.data.password.length){
@@ -53,5 +63,28 @@ export class LoginComponent implements OnInit {
                 this.errors.push("Se encontró un error al conectarse con el servidor.");
             });
         }
+    }
+    public email: string = "";
+    recuperarModal(){
+        this.email = "";
+        $("#recuperar").modal('show');
+    }
+    public isLoadEmail: boolean = false;
+    OK(){
+        if(this.email.length > 0){
+            this.isLoadEmail = true;
+            this.loginProvider.recuperar(this.email).subscribe(e => {
+                this.isLoadEmail = false;
+                if(e.success){
+                    Includes.alert("Confirmado", e.success, "info");
+                    $("#recuperar").modal('hide');
+                } else Includes.alert("¡Error!", e.error, "error");
+            }, err => {
+                this.isLoadEmail = false;
+                Includes.alert("¡Error!", "No se puede enviar el correo", "error");
+                Includes.saveErrorLog(err);
+                this.email = "";
+            });
+        } else Includes.alert(null, "El correo electrónico es requerido");
     }
 }

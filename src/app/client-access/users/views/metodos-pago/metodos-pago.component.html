@@ -23,11 +23,11 @@
                     <form>
                         <div class="form-group">
                             <label for="email">Correo electrónico de PayPal</label>
-                            <input type="email" name="email" id="email" class="form-control" autocomplete="off">
+                            <input [(ngModel)]="metodo.correo" type="email" name="email" id="email" class="form-control" autocomplete="off">
                         </div>
                         <div class="div-bock">
                             <span class="div-flex"></span>
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" [disabled]="isAllowedEmail || isLoad" (click)="savePaypal()">
                                 GUARDAR
                             </button>
                         </div>
@@ -40,40 +40,55 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="numeroCuenta">Número de la tarjeta</label>
-                                <input type="number" maxlength="16" name="numeroCuenta" id="numeroCuenta" class="form-control"
+                                <input type="number" [(ngModel)]="tarjeta.numero" maxlength="16" name="numeroCuenta" id="numeroCuenta" class="form-control"
                                     autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="ccv">CCV</label>
-                                <input type="number" maxlength="3" name="ccv" id="ccv" class="form-control"
+                                <input type="number" [(ngModel)]="tarjeta.ccv" maxlength="3" name="ccv" id="ccv" class="form-control"
                                     autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="mes">Mes de vencimiento</label>
-                                <input type="number" maxlength="2" name="mes" id="mes" class="form-control"
+                                <label for="mes">Mes de vencimiento (formato de dos dígitos)</label>
+                                <input type="number" [(ngModel)]="tarjeta.m" maxlength="2" name="mes" id="mes" class="form-control"
                                     autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="year">Año de vencimiento</label>
-                                <input type="number" maxlength="4" minlength="4" name="year" id="year" class="form-control"
+                                <label for="year">Año de vencimiento (últimos 2 dígitos)</label>
+                                <input type="number" [(ngModel)]="tarjeta.y" maxlength="4" minlength="4" name="year" id="year" class="form-control"
                                     autocomplete="off">
                             </div>
                         </div>
                     </div>
                     <div class="div-block">
                         <span class="div-flex"></span>
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" (click)="saveCard()" [disabled]="isAllowedCard || isLoad">
                             GUARDAR
                         </button>
                     </div>
                 </form>
             </div>
         </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h5>Método de pago por defecto</h5>
+        <form>
+            <div class="form-group">
+                <label for="defecto">Método por defecto</label>
+                <select name="defecto" id="defecto" class="form-control" [(ngModel)]="metodo.id_forma" (ngModelChange)="changeMetodo()">
+                    <option value="0" selected disabled>Ninguno</option>
+                    <option value="1" [disabled]="metodo.correo == ''">PayPal</option>
+                    <option value="2" [disabled]="metodo.numero.length < 10">Tarjeta de crédito/débito</option>
+                </select>
+            </div>
+        </form>
     </div>
 </div>

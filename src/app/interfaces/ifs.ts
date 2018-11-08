@@ -10,3 +10,4 @@ export * from './talla';
 export * from './carrito';
 export * from './orden';
 export * from './reporte';
+export * from './metodos-pago';

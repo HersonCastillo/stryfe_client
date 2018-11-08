@@ -34,6 +34,7 @@ import { CarritoComponent } from './client-access/users/views/carrito/carrito.co
 import { MetodosPagoComponent } from './client-access/users/views/metodos-pago/metodos-pago.component';
 import { ConfiguracionComponent } from './client-access/users/views/configuracion/configuracion.component';
 import { ProductoComponent } from './client-access/producto/producto.component';
+import { RecuperarComponent } from './recuperar/recuperar.component';
 
 export function Token(): string {
     return localStorage.getItem('token');
@@ -43,6 +44,7 @@ const app: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [AuthGuardLogin] },
     { path: 'registrar', component: RegistrarComponent, canActivate: [AuthGuardLogin] },
     { path: 'home', component: HomeComponent },
+    { path: 'recuperar/:token', component: RecuperarComponent },
     { path: 'buscar/:producto', component: BuscarComponent },
     { path: 'producto/:id', component: ProductoComponent },
     { path: 'admin', component: CpanelAdminComponent, children: [
@@ -100,7 +102,8 @@ const app: Routes = [
         CarritoComponent,
         MetodosPagoComponent,
         ConfiguracionComponent,
-        ProductoComponent
+        ProductoComponent,
+        RecuperarComponent
     ],
     imports: [
         BrowserModule,

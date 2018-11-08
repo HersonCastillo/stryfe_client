@@ -23,14 +23,8 @@
                                             <i class="nc-icon nc-single-02"></i>
                                         </span>
                                     </div>
-                                    <input 
-                                        type="email" 
-                                        name="correo" 
-                                        class="form-control" 
-                                        autocomplete="off"
-                                        placeholder="Correo electrónico"
-                                        [disabled]="isLoad"
-                                        [(ngModel)]="data.correo">
+                                    <input type="email" name="correo" class="form-control" autocomplete="off"
+                                        placeholder="Correo electrónico" [disabled]="isLoad" [(ngModel)]="data.correo">
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -38,34 +32,24 @@
                                             <i class="nc-icon nc-key-25"></i>
                                         </span>
                                     </div>
-                                    <input 
-                                        type="password" 
-                                        name="password" 
-                                        placeholder="Contraseña" 
-                                        class="form-control"
-                                        [disabled]="isLoad"
-                                        [(ngModel)]="data.password">
+                                    <input type="password" name="password" placeholder="Contraseña" class="form-control"
+                                        [disabled]="isLoad" [(ngModel)]="data.password">
                                 </div>
                             </div>
                             <div class="card-footer ">
-                                <button 
-                                    class="btn btn-round btn-block mb-3" 
-                                    [disabled]="isLoad"
-                                    (click)="login()">
+                                <button class="btn btn-round btn-block mb-3" [disabled]="isLoad" (click)="login()">
                                     <b *ngIf="!isLoad">INICIAR SESIÓN</b>
                                     <b *ngIf="isLoad">INICIANDO SESIÓN...</b>
                                 </button>
-                                <button 
-                                    class="btn btn-warning btn-round btn-block mb-3" 
-                                    type="button"
-                                    [disabled]="isLoad"
+                                <button class="btn btn-warning btn-round btn-block mb-3" type="button" [disabled]="isLoad"
                                     [routerLink]="['/registrar']">
                                     <b>CREAR CUENTA</b>
                                 </button>
                                 <br>
-                                <span>
-                                    ¿Olvidaste tu contraseña? recupera tu cuenta <a href="#some1">aquí</a>.
-                                </span>
+                                <button class="btn btn-default btn-round btn-block mb-3" type="button" [disabled]="isLoad"
+                                    (click)="recuperarModal()">
+                                    <b>RECUPERAR CUENTA</b>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -83,5 +67,25 @@
                 </div>
             </div>
         </footer>
+    </div>
+</div>
+
+<div class="modal fade" id="recuperar" tabindex="-1" role="dialog" aria-labelledby="registro" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Recuperar cuenta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <b>Correo electrónico</b><br>
+                <input [disabled]="isLoadEmail" [(ngModel)]="email" type="email" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="isLoadEmail" type="button" class="btn btn-neutral btn-round btn-block" (click)="OK()">Aceptar</button>
+            </div>
+        </div>
     </div>
 </div>
