@@ -35,6 +35,7 @@ import { MetodosPagoComponent } from './client-access/users/views/metodos-pago/m
 import { ConfiguracionComponent } from './client-access/users/views/configuracion/configuracion.component';
 import { ProductoComponent } from './client-access/producto/producto.component';
 import { RecuperarComponent } from './recuperar/recuperar.component';
+import { ReportarChatComponent } from './client-access/users/views/reportar-chat/reportar-chat.component';
 
 export function Token(): string {
     return localStorage.getItem('token');
@@ -69,10 +70,11 @@ const app: Routes = [
         { path: 'lista', component: ListaDeseosComponent },
         { path: 'carrito', component: CarritoComponent },
         { path: 'configuracion', component: ConfiguracionComponent },
+        { path: 'reportar', component: ReportarChatComponent },
         { path: 'metodos', component: MetodosPagoComponent },
         { path: '', redirectTo: 'home', pathMatch: 'full' }
     ], canActivate: [AuthGuardClient] },
-    { path: 'employee', component: EmployeeComponent },
+    { path: 'employee', component: EmployeeComponent, canActivate: [AuthGuardEmployee] },
     { path: 'error', component: ErrorComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'error', pathMatch: 'full' }
@@ -103,7 +105,8 @@ const app: Routes = [
         MetodosPagoComponent,
         ConfiguracionComponent,
         ProductoComponent,
-        RecuperarComponent
+        RecuperarComponent,
+        ReportarChatComponent
     ],
     imports: [
         BrowserModule,

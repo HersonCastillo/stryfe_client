@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Includes } from '../../../../utils/Includes';
 import { EmpleadoService } from '../../../../services/empleado.service';
 import { Usuario } from 'src/app/interfaces/usuario';
@@ -28,7 +27,7 @@ export class EmployeeUsersComponent implements OnInit {
         password: "",
         token: undefined,
         genero: 0,
-        verificado: 0
+        verificado: 1
     };
     public editValue: Usuario = {
         nombre: "",

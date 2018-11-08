@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
                             break;
                         }
                         case 2: {
-                            //this.router.navigate(['employee', 'home']); Falta vista de empleado
+                            this.router.navigate(['employee']);
                             break;
                         }
                         case 3: {

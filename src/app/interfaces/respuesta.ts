@@ -2,5 +2,6 @@ export interface Respuesta {
     success?: string,
     error?: string,
     code?: string,
-    imageName?: string
+    imageName?: string,
+    mensaje?: any
 }

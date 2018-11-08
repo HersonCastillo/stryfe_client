@@ -29,7 +29,7 @@ export class AdminUsersComponent implements OnInit {
         password: "",
         token: undefined,
         genero: 0,
-        verificado: 0
+        verificado: 1
     };
     public editValue: Usuario = {
         nombre: "",

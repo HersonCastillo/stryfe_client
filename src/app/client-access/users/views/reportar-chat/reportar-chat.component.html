@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="max-height: 550px; overflow-y: scroll;">
+            <div class="alert alert-{{(msj.id_estado_mensaje == 2) ? 'info' : 'success'}}" *ngFor="let msj of mensajes">
+                <span>{{msj.mensaje}}</span>
+            </div>
+        </div>
+        <div class="col-md-12" style="position: absolute; bottom: 10px; width: 90%;">
+            <form (ngSubmit)="enviar()">
+                <div class="form-group">
+                    <input autocomplete="off" [(ngModel)]="mensaje" name="mensaje" type="text" class="form-control" placeholder="Escriba un mensaje aquí">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

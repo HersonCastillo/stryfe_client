@@ -1,19 +1,36 @@
+<nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container">
+        <a class="navbar-brand">Empleados de Stryfe</a>
+        <button class="btn btn-danger" (click)="closesession()">Cerrar sesión</button>
+    </div>
+</nav>
 <div class="container-fluid absolute">
     <div class="row">
         <div class="col-3 mark-line">
             <h4 class="mark-line-bottom">Bandeja de mensajes</h4>
             <div class="container">
-                <div class="row down-all">
-
+                <div class="row" style=" overflow-y: scroll; max-height: 100%;">
+                    <div *ngFor="let m of mensajes.reverse()" class="alert alert-{{(m.id_estado_mensaje == 2) ? 'info' : 'success'}}" style="width: 100%;" (click)="show(m)">
+                        {{reduce(m.mensaje)}}
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-9">
             <div class="container-fuild">
                 <h4>Empleado de Stryfe</h4>
+                <br><br>
                 <div class="row">
-                    <div class="col-12 box-input">
-                        <input type="text" class="form-control" placeholder="Escribe el mensaje aquí">
+                    <div class="col-md-12">
+                        <h2>{{mensaje?.mensaje}}</h2>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" *ngIf="mensaje?.id_estado_mensaje == 2" (click)="finalizarEstado(mensaje)">
+                            Finalizar estado del mensaje
+                        </button>
+                        <button class="btn btn-default" (click)="generar()">
+                            Crear reporte
+                        </button>
                     </div>
                 </div>
             </div>
