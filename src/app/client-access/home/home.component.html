@@ -46,13 +46,13 @@
                     <h4 class="card-title">{{producto.nombre}} <b>${{producto.precio}}</b></h4>
                     <div class="div-block">
                         <span class="div-flex"></span>
-                        <button title="Agregar al carrito" class="btn btn-primary" (click)="agregarAlCarrito(producto)" *ngIf="!isInCarrito(producto)">
+                        <button title="Agregar al carrito" class="btn btn-primary" (click)="agregarAlCarrito(producto)" *ngIf="!isInCarrito(producto) && !isAdmin">
                             <span class="nc-icon nc-cart-simple"></span>
                         </button>
                         <button title="Carrito" class="btn btn-primary" [routerLink]="['/me', 'carrito']" *ngIf="isInCarrito(producto)">
                             <span class="nc-icon nc-check-2"></span>
                         </button>
-                        <button title="Agrega a lista de deseos" *ngIf="!isExistLD(producto)" (click)="agregarAListaDeseos(producto)" class="btn btn-default">
+                        <button title="Agrega a lista de deseos" *ngIf="!isExistLD(producto) && !isAdmin" (click)="agregarAListaDeseos(producto)" class="btn btn-default">
                             <span class="nc-icon nc-bookmark-2"></span>
                         </button>
                         <button title="Quitar de lista de deseos" *ngIf="isExistLD(producto)" (click)="quitarDeListaDeseos(producto)" class="btn btn-danger">

@@ -36,6 +36,7 @@ import { ConfiguracionComponent } from './client-access/users/views/configuracio
 import { ProductoComponent } from './client-access/producto/producto.component';
 import { RecuperarComponent } from './recuperar/recuperar.component';
 import { ReportarChatComponent } from './client-access/users/views/reportar-chat/reportar-chat.component';
+import { ReporteListComponent } from './client-access/admin/views/reporte-list/reporte-list.component';
 
 export function Token(): string {
     return localStorage.getItem('token');
@@ -63,7 +64,8 @@ const app: Routes = [
         { path: '', redirectTo: 'categorias', pathMatch: 'full' },
         { path: 'colores', component: ColorComponent },
         { path: 'tallas', component: TallaComponent },
-        { path: 'employees', component: EmployeeUsersComponent }
+        { path: 'employees', component: EmployeeUsersComponent },
+        { path: 'reportes', component: ReporteListComponent }
     ], canActivate: [AuthGuardAdmin] },
     { path: 'me', component: CpanelUserComponent, children: [
         { path: 'home', component: HomeUserComponent }, 
@@ -106,7 +108,8 @@ const app: Routes = [
         ConfiguracionComponent,
         ProductoComponent,
         RecuperarComponent,
-        ReportarChatComponent
+        ReportarChatComponent,
+        ReporteListComponent
     ],
     imports: [
         BrowserModule,

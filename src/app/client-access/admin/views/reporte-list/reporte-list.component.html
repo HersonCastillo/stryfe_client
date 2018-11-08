@@ -1,0 +1,31 @@
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Descripcion</th>
+            <th>Nombre producto</th>
+            <th>Tipo de reporte</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let r of reportes">
+            <td>{{r.descripcion}}</td>
+            <td>
+                {{getProducto(r.id_producto).nombre}} <br>
+                <img [src]="getImage(getProducto(r.id_producto).img)" alt="Recurso visual del producto" width="128" height="128">
+            </td>
+            <td>{{(r.id_tipo_reporte == 1) ? 'Queja' : 'Sugerencia'}}</td>
+            <td>
+                <button class="btn btn-danger" (click)="quitar(r)">
+                    Quitar
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="reportes.length == 0">
+            <td colspan="3">
+                No hay reportes para mostrar.
+            </td>
+        </tr>
+    </tbody>
+</table>

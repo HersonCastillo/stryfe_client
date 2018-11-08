@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container">
-        <a class="navbar-brand">Empleados de Stryfe</a>
+        <a class="navbar-brand" [routerLink]="['/home']">Empleados de Stryfe</a>
+        <button class="btn btn-default" (click)="generarModal()" *ngIf="canShow()">
+            Crear reporte
+        </button>
         <button class="btn btn-danger" (click)="closesession()">Cerrar sesión</button>
     </div>
 </nav>
@@ -9,8 +12,9 @@
         <div class="col-3 mark-line">
             <h4 class="mark-line-bottom">Bandeja de mensajes</h4>
             <div class="container">
-                <div class="row" style=" overflow-y: scroll; max-height: 100%;">
-                    <div *ngFor="let m of mensajes.reverse()" class="alert alert-{{(m.id_estado_mensaje == 2) ? 'info' : 'success'}}" style="width: 100%;" (click)="show(m)">
+                <div class="row" style=" overflow-y: scroll; max-height: 100%; max-height: 550px;">
+                    <div *ngFor="let m of mensajes.reverse()" class="alert alert-{{(m.id_estado_mensaje == 2) ? 'info' : 'success'}}"
+                        style="width: 100%;" (click)="show(m)">
                         {{reduce(m.mensaje)}}
                     </div>
                 </div>
@@ -21,6 +25,9 @@
                 <h4>Empleado de Stryfe</h4>
                 <br><br>
                 <div class="row">
+                    <div class="col-md-12" *ngIf="!canShow()">
+                        <h4>No hay nada para mostrar</h4>
+                    </div>
                     <div class="col-md-12">
                         <h2>{{mensaje?.mensaje}}</h2>
                     </div>
@@ -28,9 +35,58 @@
                         <button class="btn btn-primary" *ngIf="mensaje?.id_estado_mensaje == 2" (click)="finalizarEstado(mensaje)">
                             Finalizar estado del mensaje
                         </button>
-                        <button class="btn btn-default" (click)="generar()">
-                            Crear reporte
-                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-primary" id="reporte" tabindex="-1" role="dialog" aria-labelledby="xyz" aria-hidden="true">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="card card-login card-plain">
+                <div class="modal-header justify-content-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="modal-title text-center">
+                        <h5>Crear reporte</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form" onsubmit="return false">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="categoriaFocus2">Descripción</label>
+                                <input id="categoriaFocus2" type="text" [(ngModel)]="reporte.descripcion" class="form-control"
+                                    placeholder="Descripción" name="categoriaedit">
+                            </div>
+                            <div class="form-group">
+                                <label for="prod">Producto</label>
+                                <select name="prod" id="prod" class="form-control" [(ngModel)]="reporte.id_producto">
+                                    <option value="none" disabled selected>Producto</option>
+                                    <option value="{{p.id}}" *ngFor="let p of productos">{{p.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="t2">Tipo reporte</label>
+                                <select name="t2" id="t2" class="form-control" [(ngModel)]="reporte.id_tipo_reporte">
+                                    <option value="1" selected>Queja</option>
+                                    <option value="2">Sugerencia</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="row" style="width: 100%; margin-right: 0px;">
+                        <div class="col">
+                            <a data-dismiss="modal" class="btn btn-default btn-round btn-block">Cancelar</a>
+                        </div>
+                        <div class="col">
+                            <a (click)="guardarGenerar()" class="btn btn-success btn-round btn-block">Guardar</a>
+                        </div>
                     </div>
                 </div>
             </div>

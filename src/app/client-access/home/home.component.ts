@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
         createdAt: new Date(),
         updatedAt: new Date()
     };
+    public isAdmin: boolean = false;
     isInCarrito(prod: Producto): boolean {
         if(this.sessionAllow){
             return this.carrito.filter(r => r.id_producto == prod.id).length > 0;
@@ -32,6 +33,9 @@ export class HomeComponent implements OnInit {
         return false;
     }
     ngOnInit(){
+        if(localStorage.getItem('type')){
+            this.isAdmin = localStorage.getItem('type') == "admin" || localStorage.getItem('type') == "employee";
+        }
         this.sessionAllow = localStorage.getItem('token') != null;
         this.productoProvider.publicListar(false).subscribe(p => {
             this.productos = p;

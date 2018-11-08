@@ -44,14 +44,17 @@ export class LoginComponent implements OnInit {
                     localStorage.setItem('u_data', btoa(JSON.stringify(r.user)));
                     switch(r.user.id_tipo_usuario){
                         case 1: {
+                            localStorage.setItem('type', 'admin');
                             this.router.navigate(['admin']);
                             break;
                         }
                         case 2: {
+                            localStorage.setItem('type', 'employee');
                             this.router.navigate(['employee']);
                             break;
                         }
                         case 3: {
+                            localStorage.setItem('type', 'client');
                             this.router.navigate(['me', 'home']);
                             break;
                         }
