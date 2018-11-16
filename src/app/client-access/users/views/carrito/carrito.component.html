@@ -1,4 +1,7 @@
 <br>
+<div class="alert alert-danger" *ngIf="errors.length > 0">
+    <li *ngFor="let error of errors">{{error}}</li>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -40,7 +43,7 @@
 <div class="container" *ngIf="carrito.length > 0">
     <div class="div-block">
         <span class="div-flex"></span>
-        <button class="btn-primary btn">PAGAR</button>
+        <button (click)="pagarModal()" [disabled]="!canShop || isLoad" class="btn-primary btn">PAGAR</button>
     </div>
     <span>Precio total a pagar </span>
     <h1>${{precioAPagar}}</h1>
@@ -82,6 +85,67 @@
                         </div>
                         <div class="col">
                             <a (click)="editarCantidad()" class="btn btn-success btn-round btn-block">Editar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Pagar-->
+<div class="modal fade modal-primary" id="pagarModal" tabindex="-1" role="dialog" aria-labelledby="xyz" aria-hidden="true">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="card card-login card-plain">
+                <div class="modal-header justify-content-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="modal-title text-center">
+                        <h5>Confirmación de pago</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form" onsubmit="return false">
+                        <div class="card-body">
+                            <span>ID Orden temporal: <b>{{idCompra}}</b></span>
+                            <br><br>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID Producto</th>
+                                        <th>Nombre</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let producto of carrito">
+                                        <td>{{producto.producto.id.slice(0, 5)}}</td>
+                                        <td>{{producto.producto.nombre}}</td>
+                                        <td>{{producto.carrito.cantidad}}</td>
+                                        <td>${{producto.producto.precio}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            Total final <b style="font-size: 2em;">${{precioAPagar}}</b>
+                            <br><br>
+                            <div class="form-group">
+                                <label for="input0">Dirección adicional (opcional, en caso de emergencia)</label>
+                                <textarea name="input0" id="input0" cols="30" rows="10" class="form-control"
+                                    [(ngModel)]="direccionAux"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center">
+                    <div class="row" style="width: 100%; margin-right: 0px;">
+                        <div class="col">
+                            <a data-dismiss="modal" class="btn btn-default btn-round btn-block">Cancelar</a>
+                        </div>
+                        <div class="col">
+                            <button (click)="pagar()" [disabled]="isLoad" class="btn btn-success btn-round btn-block">Confirmar
+                                pago</button>
                         </div>
                     </div>
                 </div>

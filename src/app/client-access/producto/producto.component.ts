@@ -52,7 +52,7 @@ export class ProductoComponent implements OnInit {
     }
     ngOnInit() {
         if (localStorage.getItem('type')) {
-            this.isAdmin = localStorage.getItem('type') != "client";
+            this.isAdmin = false; //Delete this process
         }
         this.sessionAllow = localStorage.getItem('token') != null;
         this.route.params.subscribe(p => {

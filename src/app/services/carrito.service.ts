@@ -17,6 +17,9 @@ export class CarritoService implements CRUD<Carrito> {
     eliminar(value: Carrito): Observable<Respuesta>{
         return this.http.delete<Respuesta>(`${this.globals.PATH}api/v1/carrito/${value.id}`);
     }
+    limpiarCarrito(): Observable<Respuesta>{
+        return this.http.delete<Respuesta>(`${this.globals.PATH}api/v1/carrito/limpiar/all`);
+    }
     listar(): Observable<Carrito[]>{
         return this.http.get<Carrito[]>(`${this.globals.PATH}api/v1/carrito`);
     }

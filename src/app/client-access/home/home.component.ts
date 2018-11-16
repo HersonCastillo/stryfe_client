@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     }
     ngOnInit(){
         if(localStorage.getItem('type')){
-            this.isAdmin = localStorage.getItem('type') == "admin" || localStorage.getItem('type') == "employee";
+            this.isAdmin = false; //Delete this process
         }
         this.sessionAllow = localStorage.getItem('token') != null;
         this.productoProvider.publicListar(false).subscribe(p => {

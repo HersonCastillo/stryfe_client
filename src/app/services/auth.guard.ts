@@ -114,7 +114,7 @@ export class AuthGuardClient implements CanActivate {
                     this.router.navigate(['/login']);
                 } else {
                     this.http.get<Usuario>(this.globals.PATH + 'auth/validate').subscribe(r => {
-                        if (r && r.id_tipo_usuario == 3) rs(true);
+                        if (r) rs(true);
                         else {
                             rs(false);
                             this.router.navigate(['/login']);
@@ -154,7 +154,7 @@ export class AuthGuardEmployee implements CanActivate {
                     this.router.navigate(['/login']);
                 } else {
                     this.http.get<Usuario>(this.globals.PATH + 'auth/validate').subscribe(r => {
-                        if (r != undefined && r.id_tipo_usuario == 2) rs(true);
+                        if (r && r.id_tipo_usuario == 2) rs(true);
                         else {
                             rs(false);
                             this.router.navigate(['/login']);

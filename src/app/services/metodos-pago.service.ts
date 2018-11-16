@@ -19,6 +19,9 @@ export class MetodosPagoService implements CRUD<MetodosPago> {
     listar(reset?: boolean): Observable<MetodosPago[]> {
         throw new Error("Method not implemented.");
     }
+    listarUnique(reset?: boolean): Observable<MetodosPago> {
+        return this.http.get<MetodosPago>(`${this.globals.PATH}api/v1/metodos`);
+    }
     misMetodos(): Observable<MetodosPago>{
         return this.http.get<MetodosPago>(`${this.globals.PATH}api/v1/metodos`);
     }

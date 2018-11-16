@@ -1,3 +1,17 @@
-<p>
-    home works!
-</p>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Referente de pago</th>
+            <th>Estado</th>
+            <th>Monto ($)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let orden of ordenes">
+            <td>{{orden.token_verif}}</td>
+            <td>{{getStatus(orden.id_estado)}}</td>
+            <td>${{orden.monto_total | number}}</td>
+        </tr>
+    </tbody>
+</table>
