@@ -1,7 +1,7 @@
 <div class="wrapper wrapper-full-page" style="height: 100%;">
     <div class="full-page section-image background-flash" style="background-image: url(assets/img/ecommerce.jpg);"
         filter-color="black">
-        <div class="content">
+        <div class="content" style="top: -50px;">
             <div class="container">
                 <div class="col-lg-4 col-md-6 ml-auto mr-auto">
                     <form class="form" onsubmit="return false">
@@ -50,23 +50,13 @@
                                     (click)="recuperarModal()">
                                     <b>RECUPERAR CUENTA</b>
                                 </button>
+                                <a [routerLink]="['/home']">Ir al sitio</a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <footer class="footer footer-black  footer-white ">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="credits ml-auto">
-                        <span class="copyright">
-                            © Stryfe CCQ
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
 </div>
 

@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import swal from 'sweetalert';
-import { isArray } from 'util';
 import { Producto } from '../interfaces/ifs';
-
+import swal from 'sweetalert';
 @Injectable({
     providedIn: 'root'
 })
-
 export class Includes {
     static NAMES = {
         ERROR_LOG: "logger",
@@ -45,19 +42,7 @@ export class Includes {
         });
     }
     static saveErrorLog(error: any): void {
-        let logger = sessionStorage.getItem(this.NAMES.ERROR_LOG);
-        if (logger != undefined) {
-            try {
-                let parser = JSON.parse(logger);
-                if (isArray(parser)) {
-                    if (parser.length > 10) parser.pop();
-                    parser.push(error);
-                    sessionStorage.setItem(this.NAMES.ERROR_LOG, JSON.stringify(parser));
-                } else Includes.cleanErrorLog();
-            } catch (ex) {
-                Includes.cleanErrorLog();
-            }
-        } else sessionStorage.setItem(this.NAMES.ERROR_LOG, JSON.stringify([].push(error)));
+        sessionStorage.setItem(this.NAMES.ERROR_LOG, JSON.stringify(error));
     }
     static cleanErrorLog(): void {
         let logger = sessionStorage.getItem(this.NAMES.ERROR_LOG);

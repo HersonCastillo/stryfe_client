@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../../services/producto.service';
-import { Producto, Carrito } from 'src/app/interfaces/ifs';
+import { Producto, Carrito, Descuento } from 'src/app/interfaces/ifs';
 import { Includes } from '../../utils/Includes';
 import { CarritoService } from '../../services/carrito.service';
+import { DescuentoService } from '../../services/descuento.service';
 declare var $: any;
 @Component({
     selector: 'app-home',
@@ -12,19 +13,21 @@ declare var $: any;
 export class HomeComponent implements OnInit {
     constructor(
         private productoProvider: ProductoService,
-        private carritoProvider: CarritoService
+        private carritoProvider: CarritoService,
+        private descuentoProvider: DescuentoService
     ){}
     public sessionAllow: boolean = false;
     public carrito: Carrito[] = [];
     public productos: Producto[] = [];
     public loadingCarrito: boolean = false;
     public value: Carrito = {
-        cantidad: 0,
+        cantidad: 1,
         id_producto: null,
         id_cliente: undefined,
         createdAt: new Date(),
         updatedAt: new Date()
     };
+    public descuentos: Descuento[] = [];
     public isAdmin: boolean = false;
     isInCarrito(prod: Producto): boolean {
         if(this.sessionAllow){
@@ -39,6 +42,12 @@ export class HomeComponent implements OnInit {
         this.sessionAllow = localStorage.getItem('token') != null;
         this.productoProvider.publicListar(false).subscribe(p => {
             this.productos = p;
+            this.descuentoProvider.listarPublic().subscribe(d => {
+                this.descuentos = d;
+            }, errd => {
+                Includes.saveErrorLog(errd);
+                Includes.alert('...', 'No se pueden listar los descuentos');
+            });
         }, err => {
             Includes.saveErrorLog(err);
         });

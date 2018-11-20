@@ -1,9 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+
 .div-block{
     display: flex;
     flex-direction: row;
 }
-
 .div-flex{
     flex: 1 0 auto;
 }

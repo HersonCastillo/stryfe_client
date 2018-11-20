@@ -18,6 +18,29 @@ export class CategoriasComponent implements OnInit {
         warnings: [],
         success: []
     }
+
+    public paginator = {
+        length: 0,
+        perPage: 5,
+        indexes: [],
+        page: 0
+    }
+    getData(arr: Array<any>): Categoria[]{
+        try{
+            let i = this.paginator.perPage * this.paginator.page;
+            let f = i + this.paginator.perPage;
+            return arr.slice(i, f);
+        }catch(ex){
+            return [];
+        }
+    }
+    isTabSelected(i: number): boolean{
+        return (i - 1) == this.paginator.page;
+    }
+    clickChange(i: number): void{
+        this.paginator.page = i - 1;
+    }
+
     public auxCategories: Array<Categoria> = [];
     public categorias: Array<Categoria> = [];
     public categoria: string = "";
@@ -32,6 +55,9 @@ export class CategoriasComponent implements OnInit {
     loadCategories(reset: boolean){
         this.categoriasProvider.listar(reset).subscribe(r => {
             this.categorias = r;
+            this.paginator.length = Math.ceil(r.length / this.paginator.perPage);
+            this.paginator.indexes = [];
+            for(let i = 0; i < this.paginator.length; i++) this.paginator.indexes.push(i + 1);
         }, err => {
             this.loggerLocal.errors.push("No se pueden obtener las categorías del servidor.");
             Includes.saveErrorLog(err);
@@ -109,6 +135,7 @@ export class CategoriasComponent implements OnInit {
             this.categoriasProvider.eliminar(categoria).subscribe(r => {
                 this.removeAlert(alert, 'warnings');
                 if(r.success){
+                    this.paginator.page = 0;
                     this.loadCategories(true);
                     this.loggerLocal.success.push("Categoría eliminada con éxito.");
                 }
@@ -123,6 +150,7 @@ export class CategoriasComponent implements OnInit {
         }, null, true);
     }
     search(event): void{
+        this.paginator.page = 0;
         if(this.auxCategories.length == 0)
             if(this.searchCategory.length == 1)
                 this.auxCategories = this.categorias;

@@ -37,7 +37,8 @@ export class ProductosComponent implements OnInit {
         img: null,
         precio: 0.0,
         stock_existente: 0,
-        stock_minimo: 0
+        stock_minimo: 0,
+        genero_prodc: 0
     }
     public editValue: Producto = {
         cantidad: 0,
@@ -52,8 +53,32 @@ export class ProductosComponent implements OnInit {
         img: null,
         precio: 0.0,
         stock_existente: 0,
-        stock_minimo: 0
+        stock_minimo: 0,
+        genero_prodc: 0
     }
+
+    public paginator = {
+        length: 0,
+        perPage: 5,
+        indexes: [],
+        page: 0
+    }
+    getData(arr: Array<any>): Producto[]{
+        try{
+            let i = this.paginator.perPage * this.paginator.page;
+            let f = i + this.paginator.perPage;
+            return arr.slice(i, f);
+        }catch(ex){
+            return [];
+        }
+    }
+    isTabSelected(i: number): boolean{
+        return (i - 1) == this.paginator.page;
+    }
+    clickChange(i: number): void{
+        this.paginator.page = i - 1;
+    }
+
     public values: Array<Producto> = [];
     public auxValues: Array<Producto> = [];
     public search: string = "";
@@ -90,6 +115,9 @@ export class ProductosComponent implements OnInit {
     load(reset: boolean): void {
         this.provider.listar(reset).subscribe(u => {
             this.values = u;
+            this.paginator.length = Math.ceil(u.length / this.paginator.perPage);
+            this.paginator.indexes = [];
+            for(let i = 0; i < this.paginator.length; i++) this.paginator.indexes.push(i + 1);
         }, e => {
             Includes.saveErrorLog(e);
             this.loggerLocal.errors.push("No se puede obtener la lista. [GET:All]");
@@ -107,7 +135,7 @@ export class ProductosComponent implements OnInit {
             Includes.validateText(this.value.nombre) &&
             Includes.validateText(this.value.descripcion) &&
             this.value.cantidad > 0 &&
-            this.value.stock_minimo >= 0 &&
+            this.value.stock_minimo >= 1 &&
             this.value.id_color > 0 &&
             this.value.id_estado_prod > 0 &&
             this.value.id_rubro > 0 &&
@@ -153,7 +181,7 @@ export class ProductosComponent implements OnInit {
             Includes.validateText(this.editValue.nombre) &&
             Includes.validateText(this.editValue.descripcion) &&
             this.editValue.cantidad > 0 &&
-            this.editValue.stock_minimo >= 0 &&
+            this.editValue.stock_minimo >= 1 &&
             this.editValue.id_color > 0 &&
             this.editValue.id_estado_prod > 0 &&
             this.editValue.id_rubro > 0 &&
@@ -227,6 +255,7 @@ export class ProductosComponent implements OnInit {
                 if (r.success) {
                     this.loggerLocal.success.push(`El ${this.loggerNameLow} se eliminó con éxito.`);
                     this.load(true);
+                    this.paginator.page = 0;
                 } else {
                     if (r.error) this.loggerLocal.errors.push(r.error);
                     else this.loggerLocal.warnings.push("Ocurrió un error al eliminar.");
@@ -249,6 +278,7 @@ export class ProductosComponent implements OnInit {
         return this.provider.mostrarImagen(imageName);
     }
     searchEvent(event): void{
+        this.paginator.page = 0;
         if(this.auxValues.length == 0)
             if(this.search.length == 1)
                 this.auxValues = this.values;

@@ -15,9 +15,11 @@ export class HomeUserComponent implements OnInit {
     public ordenes: Orden[] = [];
     ngOnInit(){
         this.metodoProvider.listarUnique().subscribe(l => {
-            this.ordenProvider.listar(true).subscribe(r => {
-                this.ordenes = r.filter(d => d.id_detalle_forma == l.id);
-            });
+            if(l != null){
+                this.ordenProvider.listar(true).subscribe(r => {
+                    this.ordenes = r.filter(d => d.id_detalle_forma == l.id);
+                });
+            }
         });
     }
     getStatus(n: number): string{

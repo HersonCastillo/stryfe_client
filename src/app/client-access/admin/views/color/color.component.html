@@ -77,7 +77,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let x of values">
+                <tr *ngFor="let x of getData(values)">
                     <td class="text-center">{{x.id}}</td>
                     <td>{{x.descripcion}}</td>
                     <td class="td-actions text-right">
@@ -96,6 +96,14 @@
                 </tr>
             </tbody>
         </table>
+        <hr>
+        <nav aria-label="Paginator" *ngIf="values.length > 0">
+            <ul class="pagination">
+                <li class="page-item {{(isTabSelected(ind)) ? 'active' : ''}}" *ngFor="let ind of paginator.indexes">
+                    <a class="page-link" (click)="clickChange(ind)">{{ind}}</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 
@@ -121,8 +129,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input id="descripcion_crear" type="text" [(ngModel)]="value.descripcion" class="form-control"
-                                                placeholder="Color" name="descripcion_crear">
+                                            <input id="descripcion_crear" type="text" [(ngModel)]="value.descripcion"
+                                                class="form-control" placeholder="Color" name="descripcion_crear">
                                         </div>
                                     </div>
                                 </div>
@@ -167,8 +175,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input id="descripcion_editar" type="text" [(ngModel)]="editValue.descripcion" class="form-control"
-                                                placeholder="Talla" name="descripcion_editar">
+                                            <input id="descripcion_editar" type="text" [(ngModel)]="editValue.descripcion"
+                                                class="form-control" placeholder="Talla" name="descripcion_editar">
                                         </div>
                                     </div>
                                 </div>

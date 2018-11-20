@@ -77,7 +77,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let x of values">
+                <tr *ngFor="let x of getData(values)">
                     <td class="text-center">{{x.id}}</td>
                     <td>{{x.descripcion}}</td>
                     <td class="td-actions text-right">
@@ -96,6 +96,13 @@
                 </tr>
             </tbody>
         </table>
+        <nav aria-label="Paginator" *ngIf="values.length > 0">
+            <ul class="pagination">
+                <li class="page-item {{(isTabSelected(ind)) ? 'active' : ''}}" *ngFor="let ind of paginator.indexes">
+                    <a class="page-link" (click)="clickChange(ind)">{{ind}}</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 

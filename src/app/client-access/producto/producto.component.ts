@@ -31,7 +31,8 @@ export class ProductoComponent implements OnInit {
         nombre: "",
         precio: 0,
         stock_existente: 0,
-        stock_minimo: 0
+        stock_minimo: 0,
+        genero_prodc: 0
     }
     public sessionAllow: boolean = false;
     public isAdmin: boolean = false;

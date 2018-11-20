@@ -1,7 +1,7 @@
 <div class="wrapper wrapper-full-page ">
     <div class="full-page register-page section-image background-flash" filter-color="black" style="background-image: url(assets/img/ecommerce.jpg)">
         <div class="content">
-            <div class="container">
+            <div class="container" style="top: -70px;">
                 <div class="row">
                     <div class="col-lg-5 col-md-5 ml-auto">
                         <div class="info-area info-horizontal mt-5">
@@ -42,7 +42,8 @@
                         <div class="card card-signup text-center">
                             <div class="card-header ">
                                 <h4 class="card-title">Registrar</h4>
-                                <a [routerLink]="['/login']">Iniciar sesión</a>
+                                <a [routerLink]="['/login']">Iniciar sesión</a> | 
+                                <a [routerLink]="['/home']">Ir al sitio</a>
                             </div>
                             <div class="alert alert-danger" *ngIf="errors.length">
                                 <li *ngFor="let error of errors">
@@ -108,17 +109,6 @@
                 </div>
             </div>
         </div>
-        <footer class="footer footer-black  footer-white ">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="credits ml-auto">
-                        <span class="copyright">
-                            © Stryfe CCQ
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
 </div>
 <div class="modal fade" id="modal-accept" tabindex="-1" role="dialog" aria-labelledby="registro" aria-hidden="true">

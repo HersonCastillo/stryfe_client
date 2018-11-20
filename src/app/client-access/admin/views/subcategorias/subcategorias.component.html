@@ -78,16 +78,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let cat of subcategorias">
+                <tr *ngFor="let cat of getData(subcategorias)">
                     <td class="text-center">{{cat.id}}</td>
                     <td>{{cat.descripcion}}</td>
                     <td>{{categoryName(cat)}}</td>
                     <td class="td-actions text-right">
-                        <button (click)="editarSubcategoriaModal(cat)" type="button" style="margin-right: 5px;" rel="tooltip"
+                        <button title="Editar" (click)="editarSubcategoriaModal(cat)" type="button" style="margin-right: 5px;" rel="tooltip"
                             class="btn btn-success btn-sm btn-round btn-icon">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button (click)="eliminarSubcategoria(cat)" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon">
+                        <button title="Eliminar" (click)="eliminarSubcategoria(cat)" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon">
                             <i class="fa fa-times"></i>
                         </button>
                     </td>
@@ -99,6 +99,13 @@
                 </tr>
             </tbody>
         </table>
+        <nav aria-label="Paginator" *ngIf="subcategorias.length > 0">
+            <ul class="pagination">
+                <li class="page-item {{(isTabSelected(ind)) ? 'active' : ''}}" *ngFor="let ind of paginator.indexes">
+                    <a class="page-link" (click)="clickChange(ind)">{{ind}}</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 

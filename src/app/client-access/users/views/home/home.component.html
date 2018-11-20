@@ -13,5 +13,8 @@
             <td>{{getStatus(orden.id_estado)}}</td>
             <td>${{orden.monto_total | number}}</td>
         </tr>
+        <tr *ngIf="ordenes.length == 0">
+            <td colspan="3">No se encontraron compras recientes.</td>
+        </tr>
     </tbody>
 </table>

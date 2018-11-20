@@ -82,7 +82,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let x of values">
+                <tr *ngFor="let x of getData(values)">
                     <td class="text-center">{{x.nombre}}</td>
                     <td>{{x.descripcion}}</td>
                     <td>{{x.precio}}</td>
@@ -108,6 +108,13 @@
                 </tr>
             </tbody>
         </table>
+        <nav aria-label="Paginator" *ngIf="values.length > 0">
+            <ul class="pagination">
+                <li class="page-item {{(isTabSelected(ind)) ? 'active' : ''}}" *ngFor="let ind of paginator.indexes">
+                    <a class="page-link" (click)="clickChange(ind)">{{ind}}</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 
@@ -203,6 +210,17 @@
                                                 [(ngModel)]="value.id_color">
                                                 <option value="0" disabled selected>Color</option>
                                                 <option *ngFor="let c of color" value="{{c.id}}">{{c.descripcion}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="genero_crear">Género</label>
+                                            <select class="form-control" name="genero_crear" id="genero_crear"
+                                                [(ngModel)]="value.genero_prodc">
+                                                <option value="0">UNISEX</option>
+                                                <option value="1">Hombre</option>
+                                                <option value="2">Mujer</option>
                                             </select>
                                         </div>
                                     </div>
@@ -334,6 +352,17 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="genero_edit">Género</label>
+                                            <select class="form-control" name="genero_edit" id="genero_edit"
+                                                [(ngModel)]="editValue.genero_prodc">
+                                                <option value="0">UNISEX</option>
+                                                <option value="1">Hombre</option>
+                                                <option value="2">Mujer</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <br><br><br>
                                     <div class="col-7">
                                         <label>Imagen de representación del producto</label>
@@ -342,7 +371,8 @@
                                     </div>
                                     <div class="col-5">
                                         <label>Imagen actual del producto</label>
-                                        <img src="{{getImage(editValue.img)}}" alt="Recurso Imagen producto Edición" width="128" height="128">
+                                        <img src="{{getImage(editValue.img)}}" alt="Recurso Imagen producto Edición"
+                                            width="128" height="128">
                                     </div>
                                 </div>
                             </div>

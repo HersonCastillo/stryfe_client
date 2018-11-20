@@ -38,6 +38,28 @@ export class DescuentosComponent implements OnInit {
         monto: 0
     }
 
+    public paginator = {
+        length: 0,
+        perPage: 5,
+        indexes: [],
+        page: 0
+    }
+    getData(arr: Array<any>): Descuento[]{
+        try{
+            let i = this.paginator.perPage * this.paginator.page;
+            let f = i + this.paginator.perPage;
+            return arr.slice(i, f);
+        }catch(ex){
+            return [];
+        }
+    }
+    isTabSelected(i: number): boolean{
+        return (i - 1) == this.paginator.page;
+    }
+    clickChange(i: number): void{
+        this.paginator.page = i - 1;
+    }
+
     public values: Array<Descuento> = [];
     public auxValues: Array<Descuento> = [];
     public search: string = "";
@@ -65,6 +87,9 @@ export class DescuentosComponent implements OnInit {
     load(reset: boolean): void {
         this.provider.listar(reset).subscribe(u => {
             this.values = u;
+            this.paginator.length = Math.ceil(u.length / this.paginator.perPage);
+            this.paginator.indexes = [];
+            for(let i = 0; i < this.paginator.length; i++) this.paginator.indexes.push(i + 1);
         }, e => {
             Includes.saveErrorLog(e);
             this.loggerLocal.errors.push("No se puede obtener la lista. [GET:All]");
@@ -107,6 +132,7 @@ export class DescuentosComponent implements OnInit {
                 if (r.success) {
                     this.loggerLocal.success.push(`El ${this.loggerNameLow} se eliminó con éxito.`);
                     this.load(true);
+                    this.paginator.page = 0;
                 } else {
                     if (r.error) this.loggerLocal.errors.push(r.error);
                     else this.loggerLocal.warnings.push("Ocurrió un error al eliminar.");

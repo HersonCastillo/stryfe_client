@@ -19,6 +19,27 @@ export class SubcategoriasComponent implements OnInit {
         warnings: [],
         success: []
     }
+    public paginator = {
+        length: 0,
+        perPage: 5,
+        indexes: [],
+        page: 0
+    }
+    getData(arr: Array<any>): Subcategoria[]{
+        try{
+            let i = this.paginator.perPage * this.paginator.page;
+            let f = i + this.paginator.perPage;
+            return arr.slice(i, f);
+        }catch(ex){
+            return [];
+        }
+    }
+    isTabSelected(i: number): boolean{
+        return (i - 1) == this.paginator.page;
+    }
+    clickChange(i: number): void{
+        this.paginator.page = i - 1;
+    }
     public auxSubcategories: Array<Subcategoria> = [];
     public subcategorias: Array<Subcategoria> = [];
     public categorias: Array<Categoria> = [];
@@ -44,6 +65,9 @@ export class SubcategoriasComponent implements OnInit {
     loadSubcategories(reset: boolean){
         this.subcategoriaProvider.listar(reset).subscribe(r => {
             this.subcategorias = r;
+            this.paginator.length = Math.ceil(r.length / this.paginator.perPage);
+            this.paginator.indexes = [];
+            for(let i = 0; i < this.paginator.length; i++) this.paginator.indexes.push(i + 1);
         }, err => {
             this.loggerLocal.errors.push("No se pueden obtener las subcategorías del servidor.");
             Includes.saveErrorLog(err);
@@ -125,6 +149,7 @@ export class SubcategoriasComponent implements OnInit {
             this.subcategoriaProvider.eliminar(subcategoria).subscribe(r => {
                 this.removeAlert(alert, 'warnings');
                 if(r.success){
+                    this.paginator.page = 0;
                     this.loadSubcategories(true);
                     this.loggerLocal.success.push("Subcategoría eliminada con éxito.");
                 }
@@ -139,6 +164,7 @@ export class SubcategoriasComponent implements OnInit {
         }, null, true);
     }
     search(event): void{
+        this.paginator.page = 0;
         if(this.auxSubcategories.length == 0)
             if(this.searchSubcategory.length == 1)
                 this.auxSubcategories = this.subcategorias;

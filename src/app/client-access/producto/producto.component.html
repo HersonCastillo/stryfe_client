@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg bg-primary">
+<nav class="navbar navbar-expand-lg bg-dark">
     <div class="container">
         <a class="navbar-brand" [routerLink]="['/home']">Stryfe</a>
         <a class="navbar-brand">
-            | {{producto.nombre}}
+            {{producto.nombre}}
         </a>
     </div>
 </nav>
@@ -20,21 +20,22 @@
                             <p>
                                 {{producto.descripcion}}
                             </p>
+                            
                             <h3>${{producto.precio}}</h3>
                             <div class="div-block">
                                 <span class="div-flex"></span>
-                                <button class="btn btn-primary" (click)="agregarAlCarrito(producto)" *ngIf="!isInCarrito(producto) && !isAdmin">
-                                    Agregar al carrito
+                                <button title="Agregar al carrito" class="btn btn-primary" (click)="agregarAlCarrito(producto)" *ngIf="!isInCarrito(producto) && !isAdmin">
+                                    <span class="nc-icon nc-cart-simple"></span>
                                 </button>
-                                <button title="Carrito" class="btn btn-primary" [routerLink]="['/me', 'carrito']" *ngIf="isInCarrito(producto)">
-                                    Ver carrito
+                                <button title="Ver carrito" title="Carrito" class="btn btn-primary" [routerLink]="['/me', 'carrito']" *ngIf="isInCarrito(producto)">
+                                    <span class="nc-icon nc-check-2"></span>
                                 </button>
-                                <button class="btn btn-secondary" *ngIf="!isExistLD(producto) && !isAdmin" (click)="agregarAListaDeseos(producto)">
-                                    Agregar a lista de deseos
+                                <button title="Agregar a lista de deseos" class="btn btn-secondary" *ngIf="!isExistLD(producto) && !isAdmin" (click)="agregarAListaDeseos(producto)">
+                                    <span class="nc-icon nc-bookmark-2"></span>
                                 </button>
                                 <button title="Quitar de lista de deseos" *ngIf="isExistLD(producto)" (click)="quitarDeListaDeseos(producto)"
                                     class="btn btn-danger">
-                                    Quitar de la lista de deseos
+                                    <span class="nc-icon nc-basket"></span>
                                 </button>
                             </div>
                         </div>

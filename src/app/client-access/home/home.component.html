@@ -1,32 +1,38 @@
 <nav class="navbar navbar-expand-lg bg-dark" style="margin-bottom: 0px;">
     <div class="container">
-        <div class="navbar-translate">
-            <a class="navbar-brand" [routerLink]="['/']">Stryfe</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                <span class="navbar-toggler-icon"></span>
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+        </button>
+        <a class="navbar-brand" [routerLink]="['/']">Stryfe</a>
 
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a [routerLink]="['/']" class="nav-link">Inicio</a>
+                    <a [routerLink]="['/']" class="nav-link">
+                        <b>Inicio</b>
+                    </a>
                 </li>
                 <li class="nav-item" *ngIf="!sessionAllow">
-                    <a [routerLink]="['/login']" class="nav-link">Iniciar sesión</a>
+                    <a [routerLink]="['/login']" class="nav-link">
+                        <b>Iniciar sesión</b>
+                    </a>
                 </li>
                 <li class="nav-item" *ngIf="!sessionAllow">
-                    <a [routerLink]="['/registrar']" class="nav-link">Registrarme</a>
+                    <a [routerLink]="['/registrar']" class="nav-link">
+                        <b>Registrarme</b>
+                    </a>
                 </li>
                 <li class="nav-item" *ngIf="sessionAllow">
-                    <a [routerLink]="['/me']" class="nav-link">Mi Perfil</a>
+                    <a [routerLink]="['/me']" class="nav-link">
+                        <b>Perfil</b>
+                    </a>
                 </li>
             </ul>
-
             <form class="form-inline ml-auto">
-                <div class="form-group has-white">
+                <div class="form-group no-border">
                     <input type="text" class="form-control" placeholder="Buscar producto">
                 </div>
                 <button type="submit" class="btn btn-neutral btn-icon btn-round">
@@ -36,26 +42,36 @@
         </div>
     </div>
 </nav>
-<div class="container-fluid" style="background-color: #f4f3ef;">
+<div class="container" style="background-color: #f4f3ef !important;">
     <br>
     <div class="row">
         <div class="col-md-2" *ngFor="let producto of productos">
             <div class="card">
-                <img [routerLink]="['/producto', producto.id]" class="card-img-top" [src]="getImage(producto.img)" [alt]="producto.nombre" style="height: 195px;">
+                <img [routerLink]="['/producto', producto.id]" class="card-img-top" [src]="getImage(producto.img)"
+                    [alt]="producto.nombre" style="height: 140px;">
                 <div class="card-body">
-                    <h4 class="card-title">{{producto.nombre}} <b>${{producto.precio}}</b></h4>
+                    <h4 class="card-title">
+                        <span>{{producto.nombre}}</span>
+                        <div class="div-block">
+                            <span class="div-flex"></span>
+                            <b>${{producto.precio}}</b>
+                        </div>
+                    </h4>
                     <div class="div-block">
                         <span class="div-flex"></span>
-                        <button title="Agregar al carrito" class="btn btn-primary" (click)="agregarAlCarrito(producto)" *ngIf="!isInCarrito(producto) && !isAdmin">
+                        <button title="Agregar al carrito" class="btn btn-primary btn-fab btn-icon btn-round" (click)="agregarAlCarrito(producto)"
+                            *ngIf="!isInCarrito(producto) && !isAdmin">
                             <span class="nc-icon nc-cart-simple"></span>
                         </button>
-                        <button title="Carrito" class="btn btn-primary" [routerLink]="['/me', 'carrito']" *ngIf="isInCarrito(producto)">
+                        <button title="Carrito" class="btn btn-primary btn-fab btn-icon btn-round" [routerLink]="['/me', 'carrito']" *ngIf="isInCarrito(producto)">
                             <span class="nc-icon nc-check-2"></span>
                         </button>
-                        <button title="Agrega a lista de deseos" *ngIf="!isExistLD(producto) && !isAdmin" (click)="agregarAListaDeseos(producto)" class="btn btn-default">
+                        <button title="Agrega a lista de deseos" *ngIf="!isExistLD(producto) && !isAdmin" (click)="agregarAListaDeseos(producto)"
+                            class="btn btn-default btn-fab btn-icon btn-round">
                             <span class="nc-icon nc-bookmark-2"></span>
                         </button>
-                        <button title="Quitar de lista de deseos" *ngIf="isExistLD(producto)" (click)="quitarDeListaDeseos(producto)" class="btn btn-danger">
+                        <button title="Quitar de lista de deseos" *ngIf="isExistLD(producto)" (click)="quitarDeListaDeseos(producto)"
+                            class="btn btn-danger btn-fab btn-icon btn-round">
                             <span class="nc-icon nc-basket"></span>
                         </button>
                     </div>

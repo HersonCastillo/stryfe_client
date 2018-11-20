@@ -28,6 +28,9 @@ export class DescuentoService implements CRUD<Descuento> {
         if(!reset) if(this.descuentos != null) return of(this.descuentos);
         return this.http.get<Descuento[]>(`${this.globals.PATH}api/v1/descuento`).pipe(map(s => s), tap(nList => this.descuentos = nList));
     }
+    listarPublic(): Observable<Descuento[]>{
+        return this.http.get<Descuento[]>(`${this.globals.PATH}public/descuento`);
+    }
     obtener(value: Descuento): Observable<Descuento> {
         return this.http.get<Descuento>(`${this.globals.PATH}api/v1/descuento/${value.id}`);
     }

@@ -61,7 +61,8 @@
         <div class="col">
             <div class="form-group">
                 <label for="categoriaSearch">Buscar categoría</label>
-                <input (keyup)="search($event)" [(ngModel)]="searchCategory" type="text" class="form-control" id="categoriaSearch" placeholder="Escribe algo aquí...">
+                <input (keyup)="search($event)" [(ngModel)]="searchCategory" type="text" class="form-control" id="categoriaSearch"
+                    placeholder="Escribe algo aquí...">
             </div>
         </div>
     </div>
@@ -76,14 +77,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let cat of categorias">
+                <tr *ngFor="let cat of getData(categorias)">
                     <td class="text-center">{{cat.id}}</td>
                     <td>{{cat.descripcion}}</td>
                     <td class="td-actions text-right">
-                        <button (click)="editarCategoriaModal(cat)" type="button" style="margin-right: 5px;" rel="tooltip" class="btn btn-success btn-sm btn-round btn-icon">
+                        <button title="Editar" (click)="editarCategoriaModal(cat)" type="button" style="margin-right: 5px;" rel="tooltip"
+                            class="btn btn-success btn-sm btn-round btn-icon">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button (click)="eliminarCategoria(cat)" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon">
+                        <button title="Eliminar" (click)="eliminarCategoria(cat)" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon">
                             <i class="fa fa-times"></i>
                         </button>
                     </td>
@@ -95,6 +97,14 @@
                 </tr>
             </tbody>
         </table>
+        <hr>
+        <nav aria-label="Paginator" *ngIf="categorias.length > 0">
+            <ul class="pagination">
+                <li class="page-item {{(isTabSelected(ind)) ? 'active' : ''}}" *ngFor="let ind of paginator.indexes">
+                    <a class="page-link" (click)="clickChange(ind)">{{ind}}</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 
