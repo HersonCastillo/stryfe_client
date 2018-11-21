@@ -20,8 +20,14 @@
                             <p>
                                 {{producto.descripcion}}
                             </p>
-                            
-                            <h3>${{producto.precio}}</h3>
+                            <h3 *ngIf="!discountIsAvailable(producto)">${{producto.precio}}</h3>
+                            <h4 *ngIf="discountIsAvailable(producto)">
+                                <b>${{attrDiscount(producto.precio, getDiscount(producto).monto)}}</b>
+                                <small style="margin-left: 3px;">
+                                    <s>${{producto.precio}}</s>
+                                </small>
+                            </h4>
+                            <small *ngIf="discountIsAvailable(producto)">{{promotionsEnd(getDiscount(producto))}} día(s) para que la promoción termine: {{getDiscount(producto).fech_fin | date}}</small>
                             <div class="div-block">
                                 <span class="div-flex"></span>
                                 <button title="Agregar al carrito" class="btn btn-primary" (click)="agregarAlCarrito(producto)" *ngIf="!isInCarrito(producto) && !isAdmin">

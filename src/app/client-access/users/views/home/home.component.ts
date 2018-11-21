@@ -29,6 +29,14 @@ export class HomeUserComponent implements OnInit {
             case 3: return "Enviada";
             case 4: return "Recibida";
             case 5: return "Extraviado";
+            default: return "Indefinido";
+        }
+    }
+    getFormaPago(val: number): string{
+        switch(val){
+            case 1: return "PayPal";
+            case 2: return "Tarjeta de crédito/débito";
+            default: return "Indefinido";
         }
     }
 }

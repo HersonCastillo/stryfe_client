@@ -49,4 +49,7 @@ export class ProductoService implements CRUD<Producto> {
     random(): Observable<Producto[]>{
         return this.http.get<Producto[]>(`${this.globals.PATH}public/producto/random`);
     }
+    buscar(prod: string): Observable<Producto[]>{
+        return this.http.get<Producto[]>(`${this.globals.PATH}public/producto/like/${prod}`);
+    }
 }

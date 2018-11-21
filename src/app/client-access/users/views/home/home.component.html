@@ -4,6 +4,7 @@
         <tr>
             <th>Referente de pago</th>
             <th>Estado</th>
+            <th>Forma de pago</th>
             <th>Monto ($)</th>
         </tr>
     </thead>
@@ -11,10 +12,11 @@
         <tr *ngFor="let orden of ordenes">
             <td>{{orden.token_verif}}</td>
             <td>{{getStatus(orden.id_estado)}}</td>
+            <td>{{getFormaPago(orden.id_detalle_forma)}}</td>
             <td>${{orden.monto_total | number}}</td>
         </tr>
         <tr *ngIf="ordenes.length == 0">
-            <td colspan="3">No se encontraron compras recientes.</td>
+            <td colspan="4">No se encontraron compras recientes.</td>
         </tr>
     </tbody>
 </table>

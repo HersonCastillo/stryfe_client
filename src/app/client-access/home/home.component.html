@@ -31,9 +31,9 @@
                     </a>
                 </li>
             </ul>
-            <form class="form-inline ml-auto">
+            <form (ngSubmit)="searchBox()" class="form-inline ml-auto">
                 <div class="form-group no-border">
-                    <input type="text" class="form-control" placeholder="Buscar producto">
+                    <input name="sinput" id="sinput" [(ngModel)]="searchInput" type="text" class="form-control" placeholder="Buscar producto">
                 </div>
                 <button type="submit" class="btn btn-neutral btn-icon btn-round">
                     <i class="nc-icon nc-zoom-split"></i>
@@ -51,10 +51,17 @@
                     [alt]="producto.nombre" style="height: 140px;">
                 <div class="card-body">
                     <h4 class="card-title">
-                        <span>{{producto.nombre}}</span>
-                        <div class="div-block">
+                        <span>{{reduce(producto.nombre)}}</span>
+                        <div class="div-block" *ngIf="!discountIsAvailable(producto)">
                             <span class="div-flex"></span>
                             <b>${{producto.precio}}</b>
+                        </div>
+                        <div class="div-block" *ngIf="discountIsAvailable(producto)">
+                            <span class="div-flex"></span>
+                            <b>${{attrDiscount(producto.precio, getDiscount(producto).monto)}}</b>
+                            <small style="margin-left: 3px;">
+                                <s>${{producto.precio}}</s>
+                            </small>
                         </div>
                     </h4>
                     <div class="div-block">
@@ -63,7 +70,8 @@
                             *ngIf="!isInCarrito(producto) && !isAdmin">
                             <span class="nc-icon nc-cart-simple"></span>
                         </button>
-                        <button title="Carrito" class="btn btn-primary btn-fab btn-icon btn-round" [routerLink]="['/me', 'carrito']" *ngIf="isInCarrito(producto)">
+                        <button title="Carrito" class="btn btn-primary btn-fab btn-icon btn-round" [routerLink]="['/me', 'carrito']"
+                            *ngIf="isInCarrito(producto)">
                             <span class="nc-icon nc-check-2"></span>
                         </button>
                         <button title="Agrega a lista de deseos" *ngIf="!isExistLD(producto) && !isAdmin" (click)="agregarAListaDeseos(producto)"

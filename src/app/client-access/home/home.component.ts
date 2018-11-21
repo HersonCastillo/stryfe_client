@@ -4,6 +4,7 @@ import { Producto, Carrito, Descuento } from 'src/app/interfaces/ifs';
 import { Includes } from '../../utils/Includes';
 import { CarritoService } from '../../services/carrito.service';
 import { DescuentoService } from '../../services/descuento.service';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
     selector: 'app-home',
@@ -14,8 +15,9 @@ export class HomeComponent implements OnInit {
     constructor(
         private productoProvider: ProductoService,
         private carritoProvider: CarritoService,
-        private descuentoProvider: DescuentoService
-    ){}
+        private descuentoProvider: DescuentoService,
+        private router: Router
+    ) { }
     public sessionAllow: boolean = false;
     public carrito: Carrito[] = [];
     public productos: Producto[] = [];
@@ -29,14 +31,15 @@ export class HomeComponent implements OnInit {
     };
     public descuentos: Descuento[] = [];
     public isAdmin: boolean = false;
+    public searchInput: string = "";
     isInCarrito(prod: Producto): boolean {
-        if(this.sessionAllow){
+        if (this.sessionAllow) {
             return this.carrito.filter(r => r.id_producto == prod.id).length > 0;
-        } 
+        }
         return false;
     }
-    ngOnInit(){
-        if(localStorage.getItem('type')){
+    ngOnInit() {
+        if (localStorage.getItem('type')) {
             this.isAdmin = false; //Delete this process
         }
         this.sessionAllow = localStorage.getItem('token') != null;
@@ -53,8 +56,8 @@ export class HomeComponent implements OnInit {
         });
         this.getCarrito();
     }
-    getCarrito(): void{
-        if(this.sessionAllow){
+    getCarrito(): void {
+        if (this.sessionAllow) {
             this.carritoProvider.listar().subscribe(r => {
                 this.carrito = r;
             }, err => {
@@ -65,12 +68,12 @@ export class HomeComponent implements OnInit {
     getImage(imageName: string): any {
         return this.productoProvider.mostrarImagen(imageName);
     }
-    guardarAlCarrito(): void{
-        if(this.value.cantidad > 0){
+    guardarAlCarrito(): void {
+        if (this.value.cantidad > 0) {
             this.loadingCarrito = true;
             this.carritoProvider.crear(this.value).subscribe(r => {
                 this.loadingCarrito = false;
-                if(r.success){
+                if (r.success) {
                     $("#carritoModal").modal('hide');
                     Includes.alert("OK", "Producto agregado", "success");
                     this.getCarrito();
@@ -78,7 +81,7 @@ export class HomeComponent implements OnInit {
                     this.value.id_cliente = undefined;
                     this.value.id_producto = null;
                 } else {
-                    if(r.error) Includes.alert("¡Error!", r.error, "error");
+                    if (r.error) Includes.alert("¡Error!", r.error, "error");
                     else Includes.alert("!Ups¡", "No se puede guardar este producto.", "warning");
                 }
             }, err => {
@@ -88,25 +91,56 @@ export class HomeComponent implements OnInit {
             });
         } else Includes.alert("!Ups¡", "La cantidad no es válida", "warning");
     }
-    agregarAlCarrito(prod: Producto): void{
-        if(this.sessionAllow){
+    agregarAlCarrito(prod: Producto): void {
+        if (this.sessionAllow) {
             this.value.id_producto = prod.id;
             $("#carritoModal").modal('show');
         } else Includes.alert("¡Ups!", "Necesitas iniciar sesión para generar tu carrito.");
     }
-    agregarAListaDeseos(prod: Producto): void{
-        if(Includes.guardarProductoEnListaDeseos(prod))
+    agregarAListaDeseos(prod: Producto): void {
+        if (Includes.guardarProductoEnListaDeseos(prod))
             Includes.alert('¡Perfecto!', 'Producto agregado a la lista de deseos', 'success');
-        else 
+        else
             Includes.alert('Ocurrió algo mal', 'El producto no se puede agregar a la lista de deseos.', 'error');
     }
-    quitarDeListaDeseos(prod: Producto): void{
-        if(Includes.quitarProductoDeListaDeseos(prod))
+    quitarDeListaDeseos(prod: Producto): void {
+        if (Includes.quitarProductoDeListaDeseos(prod))
             Includes.alert('¡Perfecto!', 'Producto quitado de la lista de deseos', 'success');
-        else 
+        else
             Includes.alert('Ocurrió algo mal', 'El producto no se puede quitar de la lista de deseos.', 'error');
     }
-    isExistLD(prod: Producto): boolean{
+    isExistLD(prod: Producto): boolean {
         return Includes.existeEnListaDeseos(prod);
+    }
+    reduce(str: string): string {
+        try {
+            if (str && str.length <= 10) return str;
+            else return str.slice(0, 7).concat("...");
+        } catch (ex) {
+            return "";
+        }
+    }
+    discountIsAvailable(prod: Producto): boolean {
+        try {
+            let now = new Date();
+            let descuento: Descuento = this.descuentos.filter(d => d.id_prod == prod.id)[0];
+            let i = new Date(descuento.fech_in);
+            let f = new Date(descuento.fech_fin);
+            now.setDate(now.getDate() - 1);
+            return now >= i && now <= f;
+        } catch (ex) {
+            return false;
+        }
+    }
+    getDiscount(prod: Producto): Descuento {
+        return this.descuentos.filter(d => d.id_prod == prod.id)[0];
+    }
+    attrDiscount(m: any, d: any): number{
+        m = parseFloat(m);
+        d = parseFloat(d);
+        return d > m ? 0 : m - d;
+    }
+    searchBox(): void{
+        this.router.navigate(['/buscar', this.searchInput]);
     }
 }
