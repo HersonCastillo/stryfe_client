@@ -198,6 +198,7 @@ export class CarritoComponent implements OnInit {
                         });
                     }
                     if(cantidad < producto.stock_minimo){
+                        this.isLoad = false;
                         this.admins.forEach(el => {
                             this.ordenProvider.enviarEmail(producto, el.correo).subscribe(r => {
                                 Includes.alert('...', 'Se ha enviado una notificación a tu correo.');
@@ -205,7 +206,8 @@ export class CarritoComponent implements OnInit {
                         });
                     }
                 } else {
-                    Includes.alert('¡Ups!', `El producto '${producto.nombre}' no posee stock`);
+                    this.isLoad = false;
+                    Includes.alert('¡Ups!', `El producto '${producto.nombre}' no posee el stock`);
                 }
             });
         }, null, true);
