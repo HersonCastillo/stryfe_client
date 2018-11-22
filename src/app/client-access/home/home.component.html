@@ -33,7 +33,7 @@
             </ul>
             <form (ngSubmit)="searchBox()" class="form-inline ml-auto">
                 <div class="form-group no-border">
-                    <input name="sinput" id="sinput" [(ngModel)]="searchInput" type="text" class="form-control" placeholder="Buscar producto">
+                    <input autocomplete="off" name="sinput" id="sinput" [(ngModel)]="searchInput" type="text" class="form-control" placeholder="Buscar producto">
                 </div>
                 <button type="submit" class="btn btn-neutral btn-icon btn-round">
                     <i class="nc-icon nc-zoom-split"></i>

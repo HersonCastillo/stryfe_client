@@ -1,3 +1,56 @@
-<p>
-    buscar works!
-</p>
+<nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container">
+        <a class="navbar-brand" [routerLink]="['/home']">Stryfe</a>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="range0">Rango de precio mínimo</label>
+                                <input [disabled]="productos.length == 0" (ngModelChange)="changeMin($event)" id="input1" name="input1" type="number" [(ngModel)]="filter.min" min="0" max="9999" class="form-control">
+                                <input [disabled]="productos.length == 0" (ngModelChange)="changeMin($event)" min="0" max="9999" [(ngModel)]="filter.min" class="form-control" type="range" name="range0" id="range0">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="range1">Rango de precio máximo</label>
+                                <input [disabled]="productos.length == 0" (ngModelChange)="changeMax($event)" id="input2" name="input2" type="number" [(ngModel)]="filter.max" min="1" max="10000" class="form-control">
+                                <input [disabled]="productos.length == 0" (ngModelChange)="changeMax($event)" min="1" max="10000" [(ngModel)]="filter.max" class="form-control" type="range" name="range1" id="range1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <form (ngSubmit)="searchBox()">
+                <div class="form-group">
+                    <label for="">Buscar producto</label>
+                    <input autocomplete="off" [(ngModel)]="filter.input" placeholder="Buscar producto" autocomplete="off"
+                        type="text" class="form-control" id="input0" name="input0">
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-md-2" *ngFor="let producto of productos">
+                    <div class="card" *ngIf="isAllow(producto)">
+                        <img [routerLink]="['/producto', producto.id]" class="card-img-top" [src]="getImage(producto.img)"
+                            [alt]="producto.nombre" style="height: 140px;">
+                        <div class="card-body">
+                            <span>
+                                {{reduce(producto.nombre)}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" *ngIf="productos.length == 0">
+                    <span>No se encontraron resultados.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
