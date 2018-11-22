@@ -27,7 +27,7 @@
                                     <s>${{producto.precio}}</s>
                                 </small>
                             </h4>
-                            <small *ngIf="discountIsAvailable(producto)">{{promotionsEnd(getDiscount(producto))}} día(s) para que la promoción termine: {{getDiscount(producto).fech_fin | date}}</small>
+                            <small>{{producto.id_estado_prod == 1 ? 'Aún en producción' : 'Descontinuado'}}</small>
                             <div class="div-block">
                                 <span class="div-flex"></span>
                                 <button title="Agregar al carrito" class="btn btn-primary" (click)="agregarAlCarrito(producto)" *ngIf="!isInCarrito(producto) && !isAdmin">

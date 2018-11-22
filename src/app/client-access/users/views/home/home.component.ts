@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrdenService } from '../../../../services/orden.service';
 import { Orden } from '../../../../interfaces/orden';
 import { MetodosPagoService } from '../../../../services/metodos-pago.service';
+import { MetodosPago } from 'src/app/interfaces/ifs';
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -13,9 +14,11 @@ export class HomeUserComponent implements OnInit {
         private metodoProvider: MetodosPagoService
     ){}
     public ordenes: Orden[] = [];
+    public metodo: MetodosPago = null;
     ngOnInit(){
         this.metodoProvider.listarUnique().subscribe(l => {
             if(l != null){
+                this.metodo = l;
                 this.ordenProvider.listar(true).subscribe(r => {
                     this.ordenes = r.filter(d => d.id_detalle_forma == l.id);
                 });
@@ -32,7 +35,8 @@ export class HomeUserComponent implements OnInit {
             default: return "Indefinido";
         }
     }
-    getFormaPago(val: number): string{
+    getFormaPago(): string{
+        let val = this.metodo.id_forma;
         switch(val){
             case 1: return "PayPal";
             case 2: return "Tarjeta de crédito/débito";

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Carrito, Producto, Usuario, MetodosPago, Orden } from '../../../../interfaces/ifs';
+import { Carrito, Producto, Usuario, MetodosPago, Orden, Descuento } from '../../../../interfaces/ifs';
 import { Includes } from '../../../../utils/Includes';
 import { CarritoService } from '../../../../services/carrito.service';
 import { ProductoService } from '../../../../services/producto.service';
 import { OrdenService } from '../../../../services/orden.service';
 import { AdministradorService } from '../../../../services/administrador.service';
 import { MetodosPagoService } from '../../../../services/metodos-pago.service';
+import { DescuentoService } from '../../../../services/descuento.service';
 declare var $: any;
 @Component({
     selector: 'app-carrito',
@@ -18,8 +19,10 @@ export class CarritoComponent implements OnInit {
         private productoProvider: ProductoService,
         private usuarioProvider: AdministradorService,
         private ordenProvider: OrdenService,
-        private metodoProvider: MetodosPagoService
+        private metodoProvider: MetodosPagoService,
+        private descuentoProvider: DescuentoService
     ){}
+    public descuentos: Descuento[] = [];
     public carritos: Carrito[] = [];
     public productos: Producto[] = [];
     public carrito: Array<any> = [];
@@ -63,16 +66,26 @@ export class CarritoComponent implements OnInit {
                 });
                 this.productoProvider.listar(true).subscribe(producto => {
                     this.productos = producto;
-                    producto.forEach(p => {
-                        carrito.forEach(c => {
-                            if(c.id_producto == p.id){
-                                this.carrito.push({
-                                    producto: p,
-                                    carrito: c
-                                });
-                                this.precioAPagar += c.cantidad * p.precio;
-                            }
+                    this.descuentoProvider.listarPublic().subscribe(d => {
+                        this.descuentos = d;
+                        producto.forEach(p => {
+                            carrito.forEach(c => {
+                                if(c.id_producto == p.id){
+                                    this.carrito.push({
+                                        producto: p,
+                                        carrito: c
+                                    });
+                                    let precio = p.precio;
+                                    if(this.discountIsAvailable(p)){
+                                        precio = this.attrDiscount(precio, this.getDiscount(p).monto);
+                                    }
+                                    this.precioAPagar += c.cantidad * precio;
+                                }
+                            });
                         });
+                    }, errd => {
+                        Includes.saveErrorLog(errd);
+                        Includes.alert('...', 'No se pueden listar los descuentos');
                     });
                 }, errProducto => {
                     Includes.saveErrorLog(errProducto);
@@ -163,5 +176,26 @@ export class CarritoComponent implements OnInit {
                 Includes.saveErrorLog(err);
             });
         }, null, true);
+    }
+    discountIsAvailable(prod: Producto): boolean {
+        try {
+            let now = new Date();
+            let descuento: Descuento = this.descuentos.filter(d => d.id_prod == prod.id)[0];
+            let i = new Date(descuento.fech_in);
+            let f = new Date(descuento.fech_fin);
+            i.setDate(i.getDate() - 1);
+            now.setDate(now.getDate() - 1);
+            return now >= i && now <= f;
+        } catch (ex) {
+            return false;
+        }
+    }
+    getDiscount(prod: Producto): Descuento {
+        return this.descuentos.filter(d => d.id_prod == prod.id)[0];
+    }
+    attrDiscount(m: any, d: any): number {
+        m = parseFloat(m);
+        d = parseFloat(d);
+        return d > m ? m : m - d;
     }
 }

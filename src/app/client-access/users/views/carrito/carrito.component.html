@@ -17,7 +17,10 @@
         <tr *ngFor="let producto of carrito">
             <td>{{producto.producto.nombre}}</td>
             <td>{{producto.producto.descripcion}}</td>
-            <td>${{producto.producto.precio}}</td>
+            <td>
+                <span>${{producto.producto.precio}}</span>
+                <span *ngIf="discountIsAvailable(producto.producto)">(descuento aplicado)</span>
+            </td>
             <td>{{producto.carrito.cantidad}}</td>
             <td>
                 <img [src]="getImage(producto.producto.img)" alt="Producto" width="100px">

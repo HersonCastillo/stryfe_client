@@ -66,6 +66,7 @@
                     <th class="text-center">#</th>
                     <th>Fecha Inicio</th>
                     <th>Fecha Final</th>
+                    <th>Referente de producto</th>
                     <th>Monto</th>
                     <th class="text-right">Acciones</th>
                 </tr>
@@ -73,8 +74,9 @@
             <tbody>
                 <tr *ngFor="let x of getData(values)">
                     <td class="text-center">{{x.id}}</td>
-                    <td>{{x.fech_in}}</td>
-                    <td>{{x.fech_fin}}</td>
+                    <td>{{x.fech_in | date}}</td>
+                    <td>{{x.fech_fin | date}}</td>
+                    <td>{{x.id_prod.slice(0, 10)}}</td>
                     <td>${{x.monto}}</td>
                     <td class="td-actions text-right">
                         <button (click)="editarModal(x)" type="button" style="margin-right: 5px;" rel="tooltip" class="btn btn-success btn-sm btn-round btn-icon">
@@ -86,7 +88,7 @@
                     </td>
                 </tr>
                 <tr *ngIf="values.length === 0">
-                    <td class="text-center" colspan="5">
+                    <td class="text-center" colspan="6">
                         No se encontraron resultados.
                     </td>
                 </tr>

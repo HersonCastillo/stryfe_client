@@ -71,6 +71,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Referente</th>
                     <th class="text-center">Nombre</th>
                     <th>Descripción</th>
                     <th>Precio</th>
@@ -83,6 +84,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let x of getData(values)">
+                    <td>{{x.id.slice(0, 10)}}</td>
                     <td class="text-center">{{x.nombre}}</td>
                     <td>{{x.descripcion}}</td>
                     <td>{{x.precio}}</td>

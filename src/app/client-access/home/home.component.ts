@@ -126,6 +126,7 @@ export class HomeComponent implements OnInit {
             let descuento: Descuento = this.descuentos.filter(d => d.id_prod == prod.id)[0];
             let i = new Date(descuento.fech_in);
             let f = new Date(descuento.fech_fin);
+            i.setDate(i.getDate() - 1);
             now.setDate(now.getDate() - 1);
             return now >= i && now <= f;
         } catch (ex) {
@@ -138,7 +139,7 @@ export class HomeComponent implements OnInit {
     attrDiscount(m: any, d: any): number{
         m = parseFloat(m);
         d = parseFloat(d);
-        return d > m ? 0 : m - d;
+        return d > m ? m : m - d;
     }
     searchBox(): void{
         this.router.navigate(['/buscar', this.searchInput]);
