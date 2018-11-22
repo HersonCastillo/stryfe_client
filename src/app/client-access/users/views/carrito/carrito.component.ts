@@ -33,6 +33,7 @@ export class CarritoComponent implements OnInit {
     }
     public orden: Orden[] = [];
     public usuario: Usuario;
+    public admins: Usuario[] = [];
     public metodo: MetodosPago;
     public errors: string[] = [];
     public canShop: boolean = false;
@@ -47,6 +48,7 @@ export class CarritoComponent implements OnInit {
             if(carrito.length > 0){
                 this.usuarioProvider.listar(true).subscribe(u => {
                     this.usuario = u.filter(r => r.correo == Includes.getEmail())[0];
+                    this.admins = u.filter(d => d.id_tipo_usuario == 1);
                     if(this.validateUser(this.usuario)){
                         this.metodoProvider.listarUnique().subscribe(m => {
                             this.metodo = m;
@@ -137,43 +139,74 @@ export class CarritoComponent implements OnInit {
             return false;
         }
     }
+    searchProducto(carrito: Carrito): Producto{
+        return this.productos.filter(d => d.id == carrito.id_producto)[0];
+    }
     pagarModal(): void{
         $("#pagarModal").modal('show');
     }
     pagar(): void{
         Includes.question('¡Espera un momento!', '¿Estás seguro de que quieres realizar ya la compra?', () => {
             this.isLoad = true;
-            this.ordenProvider.crear({
-                token_verif: this.idCompra.toString(),
-                direccion_aux: this.direccionAux.trim(),
-                id_detalle_forma: this.metodo.id,
-                id_estado: 2,
-                monto_total: this.precioAPagar
-            }).subscribe(r => {
-                if(r.success){
-                    this.carritoProvider.limpiarCarrito().subscribe(l => {
-                        this.isLoad = false;
-                        if(l.success){
-                            Includes.alert("¡Bien!", "Gracias por tu compra, en unos momentos recibiras la factura en tu correo con más información sobre tu(s) productos.", "success");
-                            this.carrito = [];
-                            this.ngOnInit();
-                            $("#pagarModal").modal('hide');
-                        } else {
-                            Includes.alert('Error', r.error || r.code || "Error al limpiar carrito.", 'error');
-                        }
-                    }, errl => {
-                        this.isLoad = false;
-                        Includes.alert('Error', "Error en el servicio de limpieza.", 'error');
-                        Includes.saveErrorLog(errl);
-                    });
+            let length = this.carritos.length;
+            this.carritos.forEach((el, ind) => {
+                let producto: Producto = this.searchProducto(el);
+                let cantidad = producto.stock_existente - el.cantidad;
+                if(cantidad >= 0){
+                    if(length == (ind + 1)){
+                        producto.stock_existente = cantidad;
+                        this.productoProvider.modificar(producto).subscribe(r => {
+                            if(r.success){
+                                this.ordenProvider.crear({
+                                    token_verif: this.idCompra.toString(),
+                                    direccion_aux: this.direccionAux.trim(),
+                                    id_detalle_forma: this.metodo.id,
+                                    id_estado: 2,
+                                    monto_total: this.precioAPagar
+                                }).subscribe(r => {
+                                    if(r.success){
+                                        this.carritoProvider.limpiarCarrito().subscribe(l => {
+                                            this.isLoad = false;
+                                            if(l.success){
+                                                this.ordenProvider.compraEmail(this.idCompra.toString(), this.precioAPagar, this.usuario.correo).subscribe(r => {
+                                                    if(r.success) Includes.alert("¡Bien!", "Gracias por tu compra, en unos momentos recibiras la factura en tu correo con más información sobre tu(s) productos.", "success");
+                                                    else Includes.alert('¡Ups!', 'No se envió la factura, pero la compra si se realizó.');
+                                                });
+                                                this.carrito = [];
+                                                this.ngOnInit();
+                                                $("#pagarModal").modal('hide');
+                                            } else {
+                                                Includes.alert('Error', r.error || r.code || "Error al limpiar carrito.", 'error');
+                                            }
+                                        }, errl => {
+                                            this.isLoad = false;
+                                            Includes.alert('Error', "Error en el servicio de limpieza.", 'error');
+                                            Includes.saveErrorLog(errl);
+                                        });
+                                    } else {
+                                        this.isLoad = false;
+                                        Includes.alert('Error', r.error || r.code || "Error al crear la compra.", 'error');
+                                    }
+                                }, err => {
+                                    this.isLoad = false;
+                                    Includes.alert('Error', "Error en el servicio de compra.", 'error');
+                                    Includes.saveErrorLog(err);
+                                });
+                            } else {
+                                Includes.alert('¡Ups!', 'No se puede restar el stock');
+                            }
+                        });
+                    }
+                    if(cantidad < producto.stock_minimo){
+                        this.admins.forEach(el => {
+                            this.ordenProvider.enviarEmail(producto, el.correo).subscribe(r => {
+                                Includes.alert('...', 'Se ha enviado una notificación a tu correo.');
+                            });
+                        });
+                    }
                 } else {
-                    this.isLoad = false;
-                    Includes.alert('Error', r.error || r.code || "Error al crear la compra.", 'error');
+                    Includes.alert('¡Ups!', `El producto '${producto.nombre}' no posee stock`);
                 }
-            }, err => {
-                this.isLoad = false;
-                Includes.alert('Error', "Error en el servicio de compra.", 'error');
-                Includes.saveErrorLog(err);
             });
         }, null, true);
     }
